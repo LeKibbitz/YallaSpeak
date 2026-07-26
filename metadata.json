@@ -1,0 +1,6 @@
+{
+  "name": "Méthode Arabe Parlé au Quotidien",
+  "description": "Méthode super accélérée pour apprendre l'arabe dialectal du quotidien et le vocabulaire courant (Levantin, Égyptien, Darija, Golfe).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
