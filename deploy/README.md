@@ -12,13 +12,13 @@ Cible : VPS `vps-user` (tj-vps, 100.127.212.51), Docker + nginx, domaine
 2. **Secret sur le VPS**, jamais dans l'image ni dans git :
 
    ```bash
-   ssh vps-user 'mkdir -p ~/apps/yallaspeak'
-   ssh vps-user 'cat > ~/apps/yallaspeak/.env' <<'EOF'
+   ssh vps-user 'mkdir -p ~/yallaspeak'
+   ssh vps-user 'cat > ~/yallaspeak/.env' <<'EOF'
    GEMINI_API_KEY=...
    APP_URL=https://yallaspeak.lekibbitz.fr
-   HOST_PORT=3021
+   HOST_PORT=3051
    EOF
-   ssh vps-user 'chmod 600 ~/apps/yallaspeak/.env'
+   ssh vps-user 'chmod 600 ~/yallaspeak/.env'
    ```
 
 3. **DNS** : fait le 26/07/2026. La zone `lekibbitz.fr` est deleguee a Vercel
@@ -74,6 +74,6 @@ Le cache vit dans le volume Docker `tts-cache`, il survit aux redeploiements.
 ## Verifier
 
 ```bash
-ssh vps-user 'docker compose -f ~/apps/yallaspeak/docker-compose.yml logs -f --tail=50'
+ssh vps-user 'docker compose -f ~/yallaspeak/docker-compose.yml logs -f --tail=50'
 curl -s https://yallaspeak.lekibbitz.fr/api/health | python3 -m json.tool
 ```

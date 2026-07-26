@@ -128,7 +128,7 @@ rendu Markdown du coach. `npm audit` : 0 vulnerabilite sur 215 paquets.
 `GEMINI_API_KEY` n'existe pas dans `~/projects/lk-hq/.env`. La cle utilisee
 pour les tests a ete empruntee a `~/projects/secourpop/.env`, ce qui viole la
 regle de source unique. A ajouter dans `lk-hq/.env` avant deploiement, et a
-recopier a la main dans `~/apps/yallaspeak/.env` sur le VPS (jamais dans
+recopier a la main dans `~/yallaspeak/.env` sur le VPS (jamais dans
 l'image, jamais dans git).
 
 ---
@@ -250,12 +250,23 @@ du coach.
 
 ## 6. Deploiement
 
-Tout est pret, rien n'est deploye. Fichiers ajoutes :
+En ligne depuis le 26/07/2026 sur https://yallaspeak.lekibbitz.fr. Verifie
+en production : HTTP/2, certificat valide jusqu'au 24/10/2026, redirection 80
+vers 443, `/api/health` a `ok`, les sept en-tetes de securite presents une
+seule fois chacun, et la chaine audio complete (MISS 2,26 s puis HIT 0,11 s
+servi par nginx, WAV PCM 16 bits mono 24 kHz).
+
+Deux ajustements faits au moment du deploiement : le port 3021 etait deja pris
+sur le VPS, l'app tourne sur **3051** ; et nginx 1.24 ne connait pas la
+directive `http2 on;` (introduite en 1.25.1), donc elle est retiree, http2
+etant deja actif sur `:443` via un autre vhost.
+
+Fichiers ajoutes :
 
 - `Dockerfile` : build multi-etapes node 22 alpine, utilisateur non root,
   healthcheck sur `/api/health`
 - `.dockerignore` : exclut `.env`, `.git`, `.cache`
-- `docker-compose.yml` : ecoute sur `127.0.0.1:3021` uniquement, volume
+- `docker-compose.yml` : ecoute sur `127.0.0.1:3051` uniquement, volume
   persistant pour le cache audio, secret injecte par `.env` du VPS
 - `deploy/nginx-yallaspeak.conf` : vhost TLS, cache proxy 30 jours sur
   `/api/tts` avec `proxy_cache_lock` (une seule generation partagee entre
@@ -296,6 +307,7 @@ tant que cette page n'est pas ouverte. Rien ne peut etre deploye avant.
 - [ ] Ajouter `GEMINI_API_KEY` dans `~/projects/lk-hq/.env`
 - [ ] Ouvrir le lien Tailscale pour rouvrir SSH
 - [x] `yallaspeak.lekibbitz.fr` confirme, enregistrement A cree et propage
-- [ ] Deployer, certificat, puis `npx tsx tools/warm-tts.ts`
+- [x] Deploiement, vhost nginx et certificat Let's Encrypt
+- [ ] `npx tsx tools/warm-tts.ts` (bloque : 10 phrases par jour sans facturation)
 - [ ] Optionnel : persister la progression en `localStorage`
 - [ ] Optionnel : tests unitaires sur `speakablePart()` et `pcmToWav()`

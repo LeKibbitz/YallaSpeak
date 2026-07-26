@@ -4,7 +4,7 @@
 set -euo pipefail
 
 HOST="${HOST:-vps-user}"
-REMOTE_DIR="${REMOTE_DIR:-/home/lekibbitz/apps/yallaspeak}"
+REMOTE_DIR="${REMOTE_DIR:-/home/lekibbitz/yallaspeak}"
 DOMAIN="${DOMAIN:-yallaspeak.lekibbitz.fr}"
 LOCAL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -31,5 +31,13 @@ echo "== 4. Build et redemarrage =="
 ssh "$HOST" "cd '$REMOTE_DIR' && docker compose up -d --build && docker compose ps"
 
 echo "== 5. Sante =="
-ssh "$HOST" "curl -fsS http://127.0.0.1:\${HOST_PORT:-3021}/api/health" && echo
-echo "OK. https://$DOMAIN"
+# The container needs a moment before it answers; retry rather than fail blind
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  if ssh "$HOST" "curl -fsS http://127.0.0.1:\${HOST_PORT:-3051}/api/health"; then
+    echo; echo "OK. https://$DOMAIN"; exit 0
+  fi
+  sleep 2
+done
+echo "ERREUR: /api/health ne repond pas apres 20 s."
+ssh "$HOST" "cd '$REMOTE_DIR' && docker compose logs --tail=30"
+exit 1
