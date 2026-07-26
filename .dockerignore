@@ -1,0 +1,11 @@
+# The build stage does COPY . . : anything listed here never reaches an image layer.
+.env
+.env.*
+!.env.example
+.git
+.cache
+node_modules
+dist
+*.log
+.DS_Store
+deploy

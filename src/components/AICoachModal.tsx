@@ -3,6 +3,8 @@ import { X, Bot, Send, Sparkles, Loader2, Volume2, User, HelpCircle, Flame } fro
 import { DialectId, AICoachMessage } from '../types';
 import { DIALECTS } from '../data/dialects';
 import { AudioPlayerButton } from './AudioPlayerButton';
+import { DIALECT_TTS_NAMES } from '../lib/audio';
+import { Markdown } from '../lib/markdown';
 
 interface AICoachModalProps {
   isOpen: boolean;
@@ -64,11 +66,12 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: queryToSend,
-          dialect: currentDialectInfo.name,
+          dialect: DIALECT_TTS_NAMES[selectedDialect],
           situation: activeSituation
         })
       });
 
+      if (response.status === 429) throw new Error("RATE_LIMIT");
       if (!response.ok) throw new Error("Erreur de communication avec Sidi Hakim");
       const data = await response.json();
 
@@ -85,7 +88,10 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
       const errMsg: AICoachMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'hakim',
-        text: "🚨 Oups, ma connexion au café du souk a sauté ! Vérifie ta connexion ou réessaie dans un instant Habibi.",
+        text:
+          err instanceof Error && err.message === "RATE_LIMIT"
+            ? "☕ Doucement Habibi ! Tu poses trop de questions d'un coup. Laisse-moi souffler une minute et reviens."
+            : "🚨 Oups, ma connexion au café du souk a sauté ! Vérifie ta connexion ou réessaie dans un instant Habibi.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, errMsg]);
@@ -180,12 +186,9 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
                     <span>{msg.timestamp}</span>
                   </div>
 
-                  {/* Render message formatting */}
-                  <div className="whitespace-pre-wrap font-sans mt-1">
-                    {msg.text.split('\n').map((line, i) => {
-                      // Detect if line looks like phonetic or arabic for emphasis
-                      return <p key={i} className="my-1">{line}</p>;
-                    })}
+                  {/* The coach answers in Markdown: render it instead of printing ### and ** */}
+                  <div className="font-sans mt-1">
+                    <Markdown text={msg.text} />
                   </div>
                 </div>
 

@@ -1,0 +1,26 @@
+services:
+  yallaspeak:
+    build: .
+    image: yallaspeak:latest
+    container_name: yallaspeak
+    restart: unless-stopped
+    # Bound to loopback only: nginx is the sole entry point, TLS included
+    ports:
+      - "127.0.0.1:${HOST_PORT:-3021}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      GEMINI_API_KEY: ${GEMINI_API_KEY:?GEMINI_API_KEY manquant}
+      APP_URL: ${APP_URL:-https://yallaspeak.lekibbitz.fr}
+      TTS_CONCURRENCY: ${TTS_CONCURRENCY:-2}
+    volumes:
+      # Generated audio survives redeploys: a warm cache costs zero API call
+      - tts-cache:/app/.cache/tts
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  tts-cache:

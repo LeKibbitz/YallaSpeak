@@ -4,6 +4,7 @@ import { DialectId, ScenarioDialogue } from '../types';
 import { SAMPLE_SCENARIOS } from '../data/vocabulary';
 import { DIALECTS } from '../data/dialects';
 import { AudioPlayerButton } from './AudioPlayerButton';
+import { DIALECT_TTS_NAMES, prefetchAudio } from '../lib/audio';
 
 interface RoleplaySimulatorProps {
   selectedDialect: DialectId;
@@ -21,6 +22,8 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
   const [customPrompt, setCustomPrompt] = useState('');
   const [customDifficulty, setCustomDifficulty] = useState('Débutant Débrouillard');
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+  const [sessionDone, setSessionDone] = useState(false);
 
   React.useEffect(() => {
     const matching = SAMPLE_SCENARIOS.find(s => s.dialect === selectedDialect);
@@ -29,6 +32,19 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
     }
   }, [selectedDialect]);
 
+  // A dialogue is 4 to 6 lines: generate them all up front, staggered so the
+  // first line is ready almost immediately and the rest follow silently.
+  React.useEffect(() => {
+    setSessionDone(false);
+    const timers = activeScenario.lines.map((line, idx) =>
+      window.setTimeout(
+        () => prefetchAudio(activeScenario.dialect, line.phonetic, line.arabic),
+        idx * 300
+      )
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [activeScenario]);
+
   const currentDialectInfo = DIALECTS[selectedDialect];
 
   const handleGenerateAI = async (e: React.FormEvent) => {
@@ -36,17 +52,19 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
     if (!customPrompt.trim() || isGenerating) return;
 
     setIsGenerating(true);
+    setGenerationError(null);
     try {
       const response = await fetch('/api/gemini/roleplay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          dialect: currentDialectInfo.name,
+          dialect: DIALECT_TTS_NAMES[selectedDialect],
           scenario: customPrompt,
           difficulty: customDifficulty
         })
       });
 
+      if (response.status === 429) throw new Error("Trop de dialogues générés d'affilée, patiente une minute.");
       if (!response.ok) throw new Error("Erreur serveur lors de la génération");
       const data = await response.json();
 
@@ -74,7 +92,11 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
       }
     } catch (err) {
       console.error("Erreur de génération de dialogue:", err);
-      alert("Désolé, impossible de générer ce dialogue en ce moment. Vérifiez votre connexion ou réessayez.");
+      setGenerationError(
+        err instanceof Error && err.message.includes('patiente')
+          ? err.message
+          : "Impossible de générer ce dialogue pour le moment. Réessaie dans un instant."
+      );
     } finally {
       setIsGenerating(false);
     }
@@ -133,6 +155,13 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
               required
             />
           </div>
+
+          {generationError && (
+            <div className="flex items-start gap-2 rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-300">
+              <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
+              <span>{generationError}</span>
+            </div>
+          )}
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
             <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -329,12 +358,17 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
           <button
             onClick={() => {
               onAddXp(15);
-              alert("🎉 Bravo ! Vous avez complété cette session d'immersion ! +15 XP gagnés.");
+              setSessionDone(true);
             }}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow flex items-center gap-2 shrink-0 transition-all active:scale-95"
+            disabled={sessionDone}
+            className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-900 disabled:text-emerald-300 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow flex items-center gap-2 shrink-0 transition-all active:scale-95"
           >
             <Check className="w-4 h-4" />
-            <span>J'ai pratiqué à voix haute (+15 XP)</span>
+            <span>
+              {sessionDone
+                ? "🎉 Session validée, +15 XP !"
+                : "J'ai pratiqué à voix haute (+15 XP)"}
+            </span>
           </button>
         </div>
       </div>

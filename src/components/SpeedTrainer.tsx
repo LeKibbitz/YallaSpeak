@@ -5,6 +5,7 @@ import { VocabItem, DialectId, VocabCategory } from '../types';
 import { VOCABULARY_LIST } from '../data/vocabulary';
 import { DIALECTS, CATEGORIES_INFO } from '../data/dialects';
 import { AudioPlayerButton } from './AudioPlayerButton';
+import { prefetchAudio } from '../lib/audio';
 
 interface SpeedTrainerProps {
   selectedDialect: DialectId;
@@ -40,6 +41,23 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
     arabic: currentItem?.arabic || '',
     note: currentItem?.tip
   };
+
+  // Generate the audio while the learner is still thinking: by the time the
+  // card is revealed and "Écouter" is clicked, the file is already cached.
+  // handleNext jumps 1 to 3 cards ahead, so all three candidates are warmed.
+  useEffect(() => {
+    if (!currentItem || filteredList.length === 0) return;
+    for (let offset = 0; offset <= 3; offset++) {
+      const item = filteredList[(currentIndex + offset) % filteredList.length];
+      if (!item) continue;
+      const data = item.dialects?.[selectedDialect];
+      prefetchAudio(
+        selectedDialect,
+        data?.phonetic || item.phonetic,
+        data?.arabic || item.arabic
+      );
+    }
+  }, [currentIndex, selectedDialect, selectedCategory, currentItem, filteredList.length]);
 
   // Timer 5 seconds countdown
   useEffect(() => {
