@@ -21,8 +21,17 @@ Cible : VPS `vps-user` (tj-vps, 100.127.212.51), Docker + nginx, domaine
    ssh vps-user 'chmod 600 ~/apps/yallaspeak/.env'
    ```
 
-3. **DNS** : enregistrement A `yallaspeak` -> `148.230.117.35` sur
-   `lekibbitz.fr` (compte Hostinger MAIN).
+3. **DNS** : fait le 26/07/2026. La zone `lekibbitz.fr` est deleguee a Vercel
+   (`ns1/ns2.vercel-dns.com`), pas a Hostinger. L'enregistrement a ete cree
+   avec le CLI Vercel, comme les autres sous-domaines du VPS :
+
+   ```bash
+   vercel dns add lekibbitz.fr yallaspeak A 148.230.117.35
+   ```
+
+   Attention : un wildcard `*.lekibbitz.fr` pointe vers Vercel, donc tout
+   sous-domaine sans enregistrement explicite atterrit chez Vercel et non sur
+   le VPS. Un enregistrement A dedie est obligatoire.
 
 4. **Zone de cache nginx**, a declarer dans le contexte `http` (par exemple
    `/etc/nginx/conf.d/yallaspeak-cache.conf`) :

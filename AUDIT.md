@@ -264,10 +264,19 @@ Tout est pret, rien n'est deploye. Fichiers ajoutes :
 - `deploy/README.md` : procedure complete
 - `tools/warm-tts.ts` : prechauffe les 185 phrases statiques de l'app
 
-**Nom de domaine.** Tu as ecrit `yalaspeak.lekibitz.fr`. Le domaine reel est
-`lekibbitz.fr` et l'app s'appelle YallaSpeak dans son interface, donc j'ai
-tout configure sur **`yallaspeak.lekibbitz.fr`**. Un mot de ta part et je
-change, c'est une chaine dans trois fichiers.
+**Nom de domaine.** `yallaspeak.lekibbitz.fr`, confirme par Thomas le
+26/07/2026. Enregistrement A cree le meme jour et verifie sur le serveur
+autoritatif :
+
+```
+yallaspeak.lekibbitz.fr -> 148.230.117.35
+```
+
+A noter, la zone `lekibbitz.fr` est deleguee a **Vercel**
+(`ns1/ns2.vercel-dns.com`), pas a Hostinger : les cles Hostinger de
+`lk-hq/.env` ne servent a rien ici. Et un wildcard `*.lekibbitz.fr` renvoie
+vers Vercel, donc un sous-domaine sans enregistrement A explicite resout sans
+erreur mais n'atteint jamais le VPS.
 
 **Bloquant.** `ssh vps-user` repond :
 
@@ -286,7 +295,7 @@ tant que cette page n'est pas ouverte. Rien ne peut etre deploye avant.
 - [ ] Activer la facturation Google Cloud sur le projet Gemini
 - [ ] Ajouter `GEMINI_API_KEY` dans `~/projects/lk-hq/.env`
 - [ ] Ouvrir le lien Tailscale pour rouvrir SSH
-- [ ] Confirmer `yallaspeak.lekibbitz.fr`, creer l'enregistrement A
+- [x] `yallaspeak.lekibbitz.fr` confirme, enregistrement A cree et propage
 - [ ] Deployer, certificat, puis `npx tsx tools/warm-tts.ts`
 - [ ] Optionnel : persister la progression en `localStorage`
 - [ ] Optionnel : tests unitaires sur `speakablePart()` et `pcmToWav()`
