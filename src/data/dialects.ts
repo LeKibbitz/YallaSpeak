@@ -94,5 +94,10 @@ export const CATEGORIES_INFO: Record<VocabCategory, { label: string; icon: strin
     label: "Survie & Urgences",
     icon: "🚨",
     description: "Phrases de secours, santé, pharmacie et demander de l'aide rapidement."
+  },
+  chiffres: {
+    label: "Chiffres & Nombres",
+    icon: "🔢",
+    description: "Compter, comprendre un prix, donner une heure : le bloc qui débloque le souk et le taxi."
   }
 };

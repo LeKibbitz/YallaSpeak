@@ -439,6 +439,261 @@ export const VOCABULARY_LIST: VocabItem[] = [
     arabic: "تعبان / تعبانة / عيان",
     difficulty: 2,
     tip: "Quand vous dites 'Ta'ban', vos amis arabes s'empresseront de vous préparer un thé chaud et de vous chouchouter !"
+  },
+
+  // --- CHIFFRES & NOMBRES ---
+  // Sans les chiffres, impossible de payer, de négocier ou de donner une heure :
+  // c'est le seul bloc qu'on récite, donc le premier à travailler à la voix.
+  {
+    id: 'num-0',
+    category: 'chiffres',
+    french: "Zéro",
+    phonetic: "Sifr",
+    arabic: "صفر",
+    difficulty: 1,
+    tip: "C'est le mot arabe qui a donné 'chiffre' en français, et 'zero' en anglais.",
+    dialects: {
+      levantin: { phonetic: "Sifr", arabic: "صفر" },
+      egyptien: { phonetic: "Sifr", arabic: "صفر" },
+      darija: { phonetic: "Sifr", arabic: "صفر" },
+      golfe: { phonetic: "Sifr", arabic: "صفر" }
+    }
+  },
+  {
+    id: 'num-1',
+    category: 'chiffres',
+    french: "Un",
+    phonetic: "Wahed",
+    arabic: "واحد",
+    difficulty: 1,
+    tip: "'Wahed' sert aussi à dire 'quelqu'un' : 'fi wahed' = il y a quelqu'un.",
+    dialects: {
+      levantin: { phonetic: "Wahed", arabic: "واحد" },
+      egyptien: { phonetic: "Wahed", arabic: "واحد" },
+      darija: { phonetic: "Wahed", arabic: "واحد" },
+      golfe: { phonetic: "Wahed", arabic: "واحد" }
+    }
+  },
+  {
+    id: 'num-2',
+    category: 'chiffres',
+    french: "Deux",
+    phonetic: "Tnein",
+    arabic: "اثنين",
+    difficulty: 1,
+    tip: "Au Maroc c'est le mot le plus dépaysant de la série : 'jouj', qui ne ressemble à rien d'autre.",
+    dialects: {
+      levantin: { phonetic: "Tnein", arabic: "تنين" },
+      egyptien: { phonetic: "Itnein", arabic: "اتنين" },
+      darija: { phonetic: "Jouj", arabic: "جوج", note: "'Tnin' existe mais on dit 'jouj' pour compter des choses" },
+      golfe: { phonetic: "Ithnein", arabic: "اثنين" }
+    }
+  },
+  {
+    id: 'num-3',
+    category: 'chiffres',
+    french: "Trois",
+    phonetic: "Tlate",
+    arabic: "ثلاثة",
+    difficulty: 1,
+    dialects: {
+      levantin: { phonetic: "Tlate", arabic: "تلاتة" },
+      egyptien: { phonetic: "Talata", arabic: "تلاتة" },
+      darija: { phonetic: "Tlata", arabic: "تلاتة" },
+      golfe: { phonetic: "Thalatha", arabic: "ثلاثة", note: "Le Golfe garde le 'th' anglais de 'think'" }
+    }
+  },
+  {
+    id: 'num-4',
+    category: 'chiffres',
+    french: "Quatre",
+    phonetic: "Arbaa",
+    arabic: "أربعة",
+    difficulty: 1,
+    tip: "Le 'a' du milieu est un 3ain : la gorge se serre, comme chez le médecin.",
+    dialects: {
+      levantin: { phonetic: "Arbaa", arabic: "أربعة" },
+      egyptien: { phonetic: "Arbaa", arabic: "أربعة" },
+      darija: { phonetic: "Rebaa", arabic: "ربعة" },
+      golfe: { phonetic: "Arbaa", arabic: "أربعة" }
+    }
+  },
+  {
+    id: 'num-5',
+    category: 'chiffres',
+    french: "Cinq",
+    phonetic: "Khamse",
+    arabic: "خمسة",
+    difficulty: 1,
+    tip: "Le 'kh' racle la gorge comme la 'jota' espagnole. C'est aussi la main de Fatma, la khamsa.",
+    dialects: {
+      levantin: { phonetic: "Khamse", arabic: "خمسة" },
+      egyptien: { phonetic: "Khamsa", arabic: "خمسة" },
+      darija: { phonetic: "Khamsa", arabic: "خمسة" },
+      golfe: { phonetic: "Khamsa", arabic: "خمسة" }
+    }
+  },
+  {
+    id: 'num-6',
+    category: 'chiffres',
+    french: "Six",
+    phonetic: "Sitte",
+    arabic: "ستة",
+    difficulty: 1,
+    dialects: {
+      levantin: { phonetic: "Sitte", arabic: "ستة" },
+      egyptien: { phonetic: "Sitta", arabic: "ستة" },
+      darija: { phonetic: "Setta", arabic: "ستة" },
+      golfe: { phonetic: "Sitta", arabic: "ستة" }
+    }
+  },
+  {
+    id: 'num-7',
+    category: 'chiffres',
+    french: "Sept",
+    phonetic: "Sabaa",
+    arabic: "سبعة",
+    difficulty: 1,
+    dialects: {
+      levantin: { phonetic: "Sabaa", arabic: "سبعة" },
+      egyptien: { phonetic: "Sabaa", arabic: "سبعة" },
+      darija: { phonetic: "Sebaa", arabic: "سبعة" },
+      golfe: { phonetic: "Sabaa", arabic: "سبعة" }
+    }
+  },
+  {
+    id: 'num-8',
+    category: 'chiffres',
+    french: "Huit",
+    phonetic: "Tmane",
+    arabic: "ثمانية",
+    difficulty: 1,
+    dialects: {
+      levantin: { phonetic: "Tmane", arabic: "تمانية" },
+      egyptien: { phonetic: "Tamanya", arabic: "تمانية" },
+      darija: { phonetic: "Tmenya", arabic: "تمنية" },
+      golfe: { phonetic: "Thamanya", arabic: "ثمانية" }
+    }
+  },
+  {
+    id: 'num-9',
+    category: 'chiffres',
+    french: "Neuf",
+    phonetic: "Tessa",
+    arabic: "تسعة",
+    difficulty: 1,
+    dialects: {
+      levantin: { phonetic: "Tessa", arabic: "تسعة" },
+      egyptien: { phonetic: "Tessa", arabic: "تسعة" },
+      darija: { phonetic: "Tsoud", arabic: "تسعود" },
+      golfe: { phonetic: "Tissa", arabic: "تسعة" }
+    }
+  },
+  {
+    id: 'num-10',
+    category: 'chiffres',
+    french: "Dix",
+    phonetic: "Ashra",
+    arabic: "عشرة",
+    difficulty: 1,
+    tip: "Ça commence par un 3ain : 'Aashra', la gorge serrée, pas un 'a' français.",
+    dialects: {
+      levantin: { phonetic: "Ashra", arabic: "عشرة" },
+      egyptien: { phonetic: "Ashara", arabic: "عشرة" },
+      darija: { phonetic: "Achra", arabic: "عشرة" },
+      golfe: { phonetic: "Ashra", arabic: "عشرة" }
+    }
+  },
+  {
+    id: 'num-20',
+    category: 'chiffres',
+    french: "Vingt",
+    phonetic: "Ashrin",
+    arabic: "عشرين",
+    difficulty: 2,
+    tip: "Les dizaines se finissent toutes en '-in' : ashrin, tlatin, arbain, khamsin. Une seule terminaison à retenir.",
+    dialects: {
+      levantin: { phonetic: "Ashrin", arabic: "عشرين" },
+      egyptien: { phonetic: "Eshrin", arabic: "عشرين" },
+      darija: { phonetic: "Achrin", arabic: "عشرين" },
+      golfe: { phonetic: "Ishrin", arabic: "عشرين" }
+    }
+  },
+  {
+    id: 'num-50',
+    category: 'chiffres',
+    french: "Cinquante",
+    phonetic: "Khamsin",
+    arabic: "خمسين",
+    difficulty: 2,
+    dialects: {
+      levantin: { phonetic: "Khamsin", arabic: "خمسين" },
+      egyptien: { phonetic: "Khamsin", arabic: "خمسين" },
+      darija: { phonetic: "Khamsin", arabic: "خمسين" },
+      golfe: { phonetic: "Khamsin", arabic: "خمسين" }
+    }
+  },
+  {
+    id: 'num-100',
+    category: 'chiffres',
+    french: "Cent",
+    phonetic: "Miyye",
+    arabic: "مية",
+    difficulty: 2,
+    tip: "Deux cents se dit 'miten' : un duel, pas 'deux cents'.",
+    dialects: {
+      levantin: { phonetic: "Miyye", arabic: "مية" },
+      egyptien: { phonetic: "Miyya", arabic: "مية" },
+      darija: { phonetic: "Mya", arabic: "مية" },
+      golfe: { phonetic: "Miyya", arabic: "مية" }
+    }
+  },
+  {
+    id: 'num-1000',
+    category: 'chiffres',
+    french: "Mille",
+    phonetic: "Alf",
+    arabic: "ألف",
+    difficulty: 2,
+    tip: "'Alf shukr' = mille mercis. 'Alf mabrouk' = mille félicitations. Le mot sert autant à remercier qu'à compter.",
+    dialects: {
+      levantin: { phonetic: "Alf", arabic: "ألف" },
+      egyptien: { phonetic: "Alf", arabic: "ألف" },
+      darija: { phonetic: "Alf", arabic: "ألف" },
+      golfe: { phonetic: "Alf", arabic: "ألف" }
+    }
+  },
+  {
+    id: 'num-combien',
+    category: 'chiffres',
+    french: "Combien ? / Ça coûte combien ?",
+    literalTranslation: "Avec combien ?",
+    phonetic: "Kam ? / Bikam ?",
+    arabic: "كم؟ / بكم؟",
+    difficulty: 1,
+    tip: "'Kam' compte une quantité, 'bikam' demande un prix. Confondre les deux se remarque tout de suite.",
+    dialects: {
+      levantin: { phonetic: "Addesh ?", arabic: "أديش؟", note: "Au Levant on dit 'addesh' bien plus souvent que 'kam'" },
+      egyptien: { phonetic: "Bikam ?", arabic: "بكام؟" },
+      darija: { phonetic: "Bchhal ?", arabic: "بشحال؟" },
+      golfe: { phonetic: "Kam ? / Bikam ?", arabic: "كم؟ / بكم؟" }
+    }
+  },
+  {
+    id: 'num-heure',
+    category: 'chiffres',
+    french: "Il est quelle heure ?",
+    literalTranslation: "L'heure combien ?",
+    phonetic: "Addesh es-saa ?",
+    arabic: "أديش الساعة؟",
+    difficulty: 2,
+    tip: "Pour répondre, on colle juste le chiffre : 'es-saa tlate' = il est trois heures.",
+    dialects: {
+      levantin: { phonetic: "Addesh es-saa ?", arabic: "أديش الساعة؟" },
+      egyptien: { phonetic: "Es-saa kam ?", arabic: "الساعة كام؟" },
+      darija: { phonetic: "Chhal f-saa ?", arabic: "شحال فالساعة؟" },
+      golfe: { phonetic: "Kam es-saa ?", arabic: "كم الساعة؟" }
+    }
   }
 ];
 

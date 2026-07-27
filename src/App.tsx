@@ -12,9 +12,10 @@ import { PronunciationGuide } from './components/PronunciationGuide';
 import { AlphabetExplorer } from './components/AlphabetExplorer';
 import { DialectSelectorModal } from './components/DialectSelectorModal';
 import { AICoachModal } from './components/AICoachModal';
+import { SportMode } from './components/SportMode';
 import { DialectId, UserProgress } from './types';
 import { DIALECTS } from './data/dialects';
-import { Sparkles, Trophy, Flame, Globe, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { Sparkles, Trophy, Flame, Globe, ArrowRight, ShieldCheck, Zap, Dumbbell } from 'lucide-react';
 
 const STORAGE_KEY = 'yallaspeak_progress_v1';
 
@@ -40,6 +41,7 @@ export default function App() {
 
   const [isDialectModalOpen, setIsDialectModalOpen] = useState(false);
   const [isCoachModalOpen, setIsCoachModalOpen] = useState(false);
+  const [isSportOpen, setIsSportOpen] = useState(false);
   const [hasSeenIntro, setHasSeenIntro] = useState(() => {
     return localStorage.getItem('yallaspeak_intro_seen') === 'true';
   });
@@ -101,6 +103,7 @@ export default function App() {
         progress={progress}
         onOpenDialectSelector={() => setIsDialectModalOpen(true)}
         onOpenCoach={() => setIsCoachModalOpen(true)}
+        onOpenSport={() => setIsSportOpen(true)}
       />
 
       {/* Intro Welcome Banner (only if not dismissed or first time) */}
@@ -195,8 +198,23 @@ export default function App() {
         selectedDialect={progress.selectedDialect}
       />
 
-      {/* Floating Action Button for AI Coach on mobile */}
-      <div className="fixed bottom-6 right-6 z-30 sm:hidden">
+      {/* Hands-free session: full screen, on top of everything, from any tab */}
+      {isSportOpen && (
+        <SportMode
+          dialect={progress.selectedDialect}
+          onClose={() => setIsSportOpen(false)}
+        />
+      )}
+
+      {/* Floating Action Buttons on mobile: sport session above the AI coach */}
+      <div className="fixed bottom-6 right-6 z-30 sm:hidden flex flex-col items-center gap-3">
+        <button
+          onClick={() => setIsSportOpen(true)}
+          className="bg-stone-900 text-amber-400 p-4 rounded-full shadow-2xl border-2 border-amber-500/60 flex items-center justify-center"
+          title="Mode Sport : séance mains libres"
+        >
+          <Dumbbell className="w-5 h-5" />
+        </button>
         <button
           onClick={() => setIsCoachModalOpen(true)}
           className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-full shadow-2xl border-2 border-emerald-400 flex items-center justify-center animate-bounce"

@@ -22,7 +22,8 @@ export type VocabCategory =
   | 'negociation_souk'
   | 'emotions_argot'
   | 'verbes_moteurs'
-  | 'urgences_quotidien';
+  | 'urgences_quotidien'
+  | 'chiffres';
 
 export interface VocabItem {
   id: string;

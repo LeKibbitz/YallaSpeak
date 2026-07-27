@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Flame, Trophy, BookOpen, MessageSquare, Mic, Bot, Globe, ChevronDown, PenLine } from 'lucide-react';
+import { Zap, Flame, Trophy, BookOpen, MessageSquare, Mic, Bot, Globe, ChevronDown, PenLine, Dumbbell } from 'lucide-react';
 import { DialectId, UserProgress } from '../types';
 import { DIALECTS } from '../data/dialects';
 
@@ -9,6 +9,7 @@ interface NavbarProps {
   progress: UserProgress;
   onOpenDialectSelector: () => void;
   onOpenCoach: () => void;
+  onOpenSport: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -16,7 +17,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   progress,
   onOpenDialectSelector,
-  onOpenCoach
+  onOpenCoach,
+  onOpenSport
 }) => {
   const currentDialect = DIALECTS[progress.selectedDialect] || DIALECTS.levantin;
 
@@ -79,6 +81,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>{progress.masteredWords.length} mots</span>
               </div>
             </div>
+
+            {/* Hands-free sport session: reachable from every tab, always */}
+            <button
+              onClick={onOpenSport}
+              title="Mode sport : séance mains libres"
+              className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700 text-amber-400 font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm border border-stone-700 hover:border-amber-500/50 transition-all duration-200 active:scale-95"
+            >
+              <Dumbbell className="w-4 h-4" />
+              <span className="hidden sm:inline">Mode Sport</span>
+            </button>
 
             {/* IA Coach Button */}
             <button

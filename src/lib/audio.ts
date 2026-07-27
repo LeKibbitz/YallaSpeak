@@ -111,6 +111,8 @@ function keepSpeechAlive(): () => void {
 export interface SpeakOptions {
   onStart?: () => void;
   onEnd?: () => void;
+  /** 1 = normal. The hands-free drill slows the second pass down so it can be copied. */
+  rate?: number;
 }
 
 /** Last-resort fallback: native synthesis, only when the server audio failed. */
@@ -148,7 +150,7 @@ export async function speakNatively(
   } else {
     utterance.lang = useArabic ? 'ar' : 'fr-FR';
   }
-  utterance.rate = 0.9;
+  utterance.rate = options.rate ?? 0.9;
 
   const stopKeepAlive = keepSpeechAlive();
   let settled = false;
