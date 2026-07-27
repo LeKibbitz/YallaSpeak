@@ -108,7 +108,7 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
               <span className="text-sm text-stone-300 font-semibold">
                 {letter.example.translit}
               </span>
-              <span className="text-sm text-stone-500">— {letter.example.fr}</span>
+              <span className="text-sm text-stone-500">{letter.example.fr}</span>
               <AudioPlayerButton
                 text={letter.example.translit}
                 arabicText={letter.example.ar}
