@@ -30,13 +30,5 @@
   animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Handwriting animation (LetterWriter): the mask stroke draws itself, the
-   pen tip rides the same path. pathLength=100 makes the timing independent
-   of how long the real path is. */
-@keyframes penWrite {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes penTravel {
-  to { offset-distance: 100%; }
-}
+/* The handwriting animation lives in LetterWriter.tsx, not here: each stroke
+   needs a duration taken from its own measured length, which CSS cannot express. */

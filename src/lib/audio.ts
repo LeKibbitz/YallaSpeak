@@ -21,18 +21,54 @@ export function ttsUrl(dialect: DialectId, text: string, arabicText?: string): s
   return `/api/tts?${params.toString()}`;
 }
 
+/**
+ * Server audio that just failed, with the moment it is worth trying again.
+ *
+ * Without this, a spent daily quota means every single click pays the network
+ * round trip again before falling back to the browser voice. Shared between the
+ * prefetcher and the player so one failure teaches both.
+ */
+const unavailableUntil = new Map<string, number>();
+const DEFAULT_COOLDOWN_MS = 10 * 60_000;
+
+export function isServerAudioUnavailable(url: string): boolean {
+  const until = unavailableUntil.get(url);
+  if (until === undefined) return false;
+  if (Date.now() >= until) {
+    unavailableUntil.delete(url);
+    return false;
+  }
+  return true;
+}
+
+/** `retryAfter` comes from the server in seconds, capped so a daily quota does not pin the whole session. */
+export function markServerAudioUnavailable(url: string, retryAfterSeconds?: number): void {
+  const ms =
+    retryAfterSeconds && retryAfterSeconds > 0
+      ? Math.min(retryAfterSeconds * 1000, 30 * 60_000)
+      : DEFAULT_COOLDOWN_MS;
+  unavailableUntil.set(url, Date.now() + ms);
+}
+
+export function clearServerAudioFailure(url: string): void {
+  unavailableUntil.delete(url);
+}
+
 /** Warm the HTTP cache ahead of the click (next flashcard, next dialogue line). */
 const prefetched = new Set<string>();
 
 export function prefetchAudio(dialect: DialectId, text: string, arabicText?: string): void {
   if (!text && !arabicText) return;
   const url = ttsUrl(dialect, text, arabicText);
-  if (prefetched.has(url)) return;
+  if (prefetched.has(url) || isServerAudioUnavailable(url)) return;
   prefetched.add(url);
   fetch(url, { method: 'GET', cache: 'force-cache' })
     .then((response) => {
+      if (response.ok) return;
       // A quota 429 is temporary: forget it so the next visit retries
-      if (!response.ok) prefetched.delete(url);
+      prefetched.delete(url);
+      const retryAfter = Number(response.headers.get('Retry-After'));
+      markServerAudioUnavailable(url, Number.isFinite(retryAfter) ? retryAfter : undefined);
     })
     .catch(() => prefetched.delete(url));
 }

@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Volume2, Loader2 } from 'lucide-react';
 import { DialectId } from '../types';
-import { speakNatively, ttsUrl } from '../lib/audio';
+import {
+  clearServerAudioFailure,
+  isServerAudioUnavailable,
+  markServerAudioUnavailable,
+  speakNatively,
+  ttsUrl
+} from '../lib/audio';
 
 interface AudioPlayerButtonProps {
   text: string;
@@ -21,6 +27,9 @@ const MAX_ELEMENTS = 120;
 
 // Generation takes up to ~5 s on a cold cache; past that the load is stuck.
 const STALL_TIMEOUT_MS = 9000;
+
+/** HAVE_CURRENT_DATA: enough is buffered that play() starts on this frame. */
+const READY_TO_PLAY = 2;
 
 function getAudioElement(url: string): HTMLAudioElement {
   const existing = audioElements.get(url);
@@ -73,10 +82,19 @@ export const AudioPlayerButton: React.FC<AudioPlayerButtonProps> = ({
     }
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
+    // The server just refused this phrase (spent quota): asking again only buys
+    // a round trip before the same fallback. Speak now instead.
+    if (isServerAudioUnavailable(url)) {
+      set('playing');
+      await speakNatively(text, arabicText, { onEnd: () => set('idle') });
+      return;
+    }
+
     const audio = getAudioElement(url);
     currentAudio = audio;
     audio.currentTime = 0;
-    set('loading');
+    // Already buffered from a previous play: no spinner, no perceived latency
+    set(audio.readyState >= READY_TO_PLAY ? 'playing' : 'loading');
 
     let settled = false;
 
@@ -95,6 +113,8 @@ export const AudioPlayerButton: React.FC<AudioPlayerButtonProps> = ({
       cleanup();
       audio.pause();
       audioElements.delete(url);
+      // Remembered app-wide: the next click on this phrase skips the server
+      markServerAudioUnavailable(url);
       set('playing');
       speakNatively(text, arabicText, { onEnd: () => set('idle') });
     };
@@ -104,6 +124,7 @@ export const AudioPlayerButton: React.FC<AudioPlayerButtonProps> = ({
     audio.onplaying = () => {
       settled = true;
       clearTimeout(watchdog);
+      clearServerAudioFailure(url);
       set('playing');
     };
     audio.onended = () => {

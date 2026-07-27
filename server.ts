@@ -120,12 +120,34 @@ function isQuotaError(error: unknown): boolean {
   return /RESOURCE_EXHAUSTED|"code"\s*:\s*429|\b429\b/.test(message);
 }
 
-/** Seconds the provider asks us to wait, when it says so. */
-function retryDelaySeconds(error: unknown, fallback = 20): number {
+/**
+ * Seconds the provider asks us to wait. Returns NaN when it says nothing.
+ *
+ * Both shapes matter: "retry in 12.5s" (per-minute quota) and
+ * `retryDelay: '66324s'` (per-day quota). Confusing the two is what made every
+ * request sit through a pointless 20 s sleep before failing.
+ */
+function parseRetryDelaySeconds(error: unknown): number {
   const message = error instanceof Error ? error.message : String(error ?? "");
-  const match = /retry in ([\d.]+)s/i.exec(message);
+  const match =
+    /retry in ([\d.]+)\s*s/i.exec(message) ||
+    /"?retryDelay"?\s*:\s*"?([\d.]+)s/i.exec(message);
   const seconds = match ? Math.ceil(Number(match[1])) : NaN;
-  return Number.isFinite(seconds) && seconds > 0 && seconds <= 120 ? seconds : fallback;
+  return Number.isFinite(seconds) && seconds > 0 ? seconds : NaN;
+}
+
+/** Seconds to advertise in Retry-After, bounded so a client can act on it. */
+function retryDelaySeconds(error: unknown, fallback = 20): number {
+  const seconds = parseRetryDelaySeconds(error);
+  return Number.isFinite(seconds) ? Math.min(seconds, 86_400) : fallback;
+}
+
+/** A per-minute burst is worth waiting out in-request; a daily cap never is. */
+const SHORT_QUOTA_MAX_S = 60;
+
+function isDailyQuota(error: unknown): boolean {
+  const seconds = parseRetryDelaySeconds(error);
+  return isQuotaError(error) && (!Number.isFinite(seconds) || seconds > SHORT_QUOTA_MAX_S);
 }
 
 /** Never echo provider errors to the client: they can carry keys or quota details. */
@@ -350,6 +372,27 @@ function releaseTtsSlot(): void {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * Circuit breaker on the daily quota.
+ *
+ * Once the provider says "come back in 18 hours", every further call is a
+ * guaranteed failure that still costs a round trip. Failing instantly is what
+ * lets the button fall back to the browser voice without a visible freeze.
+ */
+let ttsBlockedUntil = 0;
+
+class QuotaBlockedError extends Error {
+  constructor(public readonly retryAfter: number) {
+    super(`RESOURCE_EXHAUSTED: quota TTS journalier, retryDelay: ${retryAfter}s`);
+  }
+}
+
+function noteDailyQuota(error: unknown): void {
+  const seconds = retryDelaySeconds(error, 3600);
+  ttsBlockedUntil = Date.now() + seconds * 1000;
+  console.warn(`[tts] quota journalier atteint, appels suspendus ${seconds} s`);
+}
+
 export async function generateSpeech(dialect: string, spoken: string): Promise<Buffer> {
   const key = ttsCacheKey(dialect, spoken);
   const file = path.join(AUDIO_CACHE_DIR, `${key}.wav`);
@@ -359,6 +402,11 @@ export async function generateSpeech(dialect: string, spoken: string): Promise<B
   } catch {
     /* cache miss */
   }
+
+  // Checked after the disk cache: already-generated audio must keep serving
+  // while the quota is spent.
+  const blockedFor = ttsBlockedUntil - Date.now();
+  if (blockedFor > 0) throw new QuotaBlockedError(Math.ceil(blockedFor / 1000));
 
   const pending = inFlight.get(key);
   if (pending) return pending;
@@ -381,11 +429,22 @@ export async function generateSpeech(dialect: string, spoken: string): Promise<B
       try {
         response = await request();
       } catch (error) {
+        // Only a per-minute burst is worth waiting out: retrying a daily cap
+        // just adds 20 s to a failure that was already certain.
         if (!isQuotaError(error)) throw error;
+        if (isDailyQuota(error)) {
+          noteDailyQuota(error);
+          throw error;
+        }
         const wait = Math.min(retryDelaySeconds(error) * 1000 + 500, TTS_MAX_WAIT_MS);
-        console.warn(`[tts] quota atteint, nouvelle tentative dans ${wait} ms`);
+        console.warn(`[tts] quota par minute atteint, nouvelle tentative dans ${wait} ms`);
         await sleep(wait);
-        response = await request();
+        try {
+          response = await request();
+        } catch (retryError) {
+          if (isDailyQuota(retryError)) noteDailyQuota(retryError);
+          throw retryError;
+        }
       }
     } finally {
       releaseTtsSlot();
@@ -437,6 +496,9 @@ app.get("/api/tts", rateLimit("tts", 120, 60_000), async (req, res) => {
     res.setHeader("ETag", `"${ttsCacheKey(dialect, spoken)}"`);
     res.end(wav);
   } catch (error) {
+    // A quota failure must never be cached by nginx or the browser: it would
+    // outlive the quota window and keep a working phrase silent.
+    res.setHeader("Cache-Control", "no-store");
     failed(res, "tts", error);
   }
 });

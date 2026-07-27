@@ -4,6 +4,7 @@ import { ARABIC_ALPHABET } from '../data/alphabet';
 import { DialectId } from '../types';
 import { AudioPlayerButton } from './AudioPlayerButton';
 import { LetterWriter } from './LetterWriter';
+import { prefetchAudio } from '../lib/audio';
 
 interface AlphabetExplorerProps {
   selectedDialect: DialectId;
@@ -40,6 +41,16 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [index, select, replay]);
+
+  // Fetch while the letter is still being written, so the sound is already
+  // there when the button is clicked. The next letter follows for the same
+  // reason: the arrow key should never wait on the network.
+  useEffect(() => {
+    const next = ARABIC_ALPHABET[(index + 1) % ARABIC_ALPHABET.length];
+    prefetchAudio(selectedDialect, letter.translit, letter.name);
+    prefetchAudio(selectedDialect, letter.example.translit, letter.example.ar);
+    prefetchAudio(selectedDialect, next.translit, next.name);
+  }, [index, letter, selectedDialect]);
 
   useEffect(() => {
     if (!touring) return;

@@ -79,6 +79,13 @@ export interface ArabicLetter {
   example: { ar: string; translit: string; fr: string };
   /** Pen centreline for the isolated form, in the 100x100 writing viewBox */
   penPath: string;
+  /**
+   * Diacritic dots, same viewBox, measured from the Amiri outlines (a group of
+   * touching dots comes out as one blob, which is also how a hand writes them).
+   * A hand lifts the pen for these, so they are punched out of the body reveal
+   * and land afterwards, in order.
+   */
+  dots?: { x: number; y: number; r: number }[];
 }
 
 export interface AICoachMessage {
