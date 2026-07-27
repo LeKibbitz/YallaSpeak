@@ -9,6 +9,7 @@ import { SpeedTrainer } from './components/SpeedTrainer';
 import { VocabExplorer } from './components/VocabExplorer';
 import { RoleplaySimulator } from './components/RoleplaySimulator';
 import { PronunciationGuide } from './components/PronunciationGuide';
+import { AlphabetExplorer } from './components/AlphabetExplorer';
 import { DialectSelectorModal } from './components/DialectSelectorModal';
 import { AICoachModal } from './components/AICoachModal';
 import { DialectId, UserProgress } from './types';
@@ -172,6 +173,10 @@ export default function App() {
           <PronunciationGuide
             selectedDialect={progress.selectedDialect}
           />
+        )}
+
+        {activeTab === 'alphabet' && (
+          <AlphabetExplorer selectedDialect={progress.selectedDialect} />
         )}
       </main>
 

@@ -69,6 +69,18 @@ export interface UserProgress {
   completedScenarios: string[];
 }
 
+export interface ArabicLetter {
+  id: string;
+  char: string;
+  name: string; // Arabic name of the letter
+  translit: string;
+  sound: string;
+  hack: string;
+  example: { ar: string; translit: string; fr: string };
+  /** Pen centreline for the isolated form, in the 100x100 writing viewBox */
+  penPath: string;
+}
+
 export interface AICoachMessage {
   id: string;
   sender: 'user' | 'hakim';
