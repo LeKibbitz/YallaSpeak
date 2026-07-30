@@ -115,6 +115,62 @@ export const DIALECTS: Record<DialectId, DialectInfo> = {
       arabic: "Uè, jamme!"
     },
     popularMedia: "Gomorra, L'amica geniale, chansons de Pino Daniele, stade Diego Maradona."
+  },
+  mandarin_standard: {
+    id: 'mandarin_standard',
+    name: 'Mandarin standard (Pǔtōnghuà)',
+    flag: '🇨🇳',
+    countries: ['Toute la Chine', 'Singapour'],
+    description: "La langue commune d'un milliard de locuteurs : celle de la télé, de l'école et des affaires. Comprise de Pékin à Kunming, c'est la base sur laquelle tous les accents régionaux se greffent.",
+    vibe: "Clair, neutre, passe-partout et efficace.",
+    signatureWord: {
+      word: "Jiāyóu!",
+      meaning: "Allez ! / Courage ! (littéralement « ajoute de l'essence »)",
+      arabic: "加油！"
+    },
+    popularMedia: "Cinéma de Zhang Yimou, séries iQiyi, C-pop, jeux vidéo de miHoYo."
+  },
+  pekinois: {
+    id: 'pekinois',
+    name: 'Pékin (Běijīnghuà)',
+    flag: '🏮',
+    countries: ['Pékin', 'Nord de la Chine'],
+    description: "L'accent de la capitale, base historique du standard, reconnaissable à son « -r » final (érisation) qui fait rouler la fin des mots. Le parler gouailleur des hutongs et des chauffeurs de taxi.",
+    vibe: "Gouailleur, impérial, sûr de lui.",
+    signatureWord: {
+      word: "Gēmenr!",
+      meaning: "Mon pote ! (le « frérot » pékinois, avec le -r signature)",
+      arabic: "哥们儿！"
+    },
+    popularMedia: "Stand-up xiangsheng, films de Feng Xiaogang, rock de Pékin (Cui Jian)."
+  },
+  taiwanais: {
+    id: 'taiwanais',
+    name: 'Taïwan (Guóyǔ)',
+    flag: '🇹🇼',
+    countries: ['Taïwan'],
+    description: "Le mandarin de Taipei : plus doux, plus chantant, sans érisation, truffé de particules finales (la, o, ne) et de mots à lui. S'écrit en caractères traditionnels.",
+    vibe: "Doux, poli, mélodique et kawaii.",
+    signatureWord: {
+      word: "Zhēn de jiǎ de?",
+      meaning: "Sérieux ?! (littéralement « vrai ou faux ? »)",
+      arabic: "真的假的？"
+    },
+    popularMedia: "Mandopop de Jay Chou, séries Netflix taïwanaises, night markets de Taipei."
+  },
+  dongbei: {
+    id: 'dongbei',
+    name: 'Nord-Est (Dōngběihuà)',
+    flag: '❄️',
+    countries: ['Heilongjiang', 'Jilin', 'Liaoning'],
+    description: "Le parler du Grand Nord-Est, star de la comédie et des livestreams chinois : direct, imagé, volume maximal. L'accent le plus drôle du mandarin, celui qui réchauffe des hivers à -30°C.",
+    vibe: "Cash, hilarant, chaleureux, glacial dehors.",
+    signatureWord: {
+      word: "Lǎotiě!",
+      meaning: "Frérot ! (littéralement « vieux fer » : un ami en béton)",
+      arabic: "老铁！"
+    },
+    popularMedia: "Livestreams Douyin, sketchs de Zhao Benshan, série The Long Season."
   }
 };
 

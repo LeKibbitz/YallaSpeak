@@ -8,7 +8,11 @@ export const DIALECT_TTS_NAMES: Record<DialectId, string> = {
   italien_standard: 'Standard Italian',
   milanais: 'Northern Italian',
   romanesco: 'Roman Italian',
-  napolitain: 'Neapolitan Italian'
+  napolitain: 'Neapolitan Italian',
+  mandarin_standard: 'Standard Mandarin Chinese',
+  pekinois: 'Beijing Mandarin Chinese',
+  taiwanais: 'Taiwanese Mandarin Chinese',
+  dongbei: 'Northeastern Mandarin Chinese'
 };
 
 /**

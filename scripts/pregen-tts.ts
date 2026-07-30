@@ -6,34 +6,53 @@
  * Usage: esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs && node .tmp/pregen-tts.cjs
  */
 import { VOCABULARY_LIST_IT } from '../src/data/vocabulary.italian';
+import { VOCABULARY_LIST_MD } from '../src/data/vocabulary.mandarin';
 import { DIALECTS } from '../src/data/dialects';
-import { DialectId } from '../src/types';
+import { DialectId, VocabItem } from '../src/types';
 
 const BASE = process.env.PREGEN_BASE || 'https://yallaspeak.lekibbitz.fr';
 
 // Kept in sync with DIALECT_TTS_NAMES (src/lib/audio.ts); duplicated here so
-// the script never drags browser-only code into a node bundle.
-const VARIANTS: Partial<Record<DialectId, string>> = {
-  italien_standard: 'Standard Italian',
-  milanais: 'Northern Italian',
-  romanesco: 'Roman Italian',
-  napolitain: 'Neapolitan Italian'
-};
+// the script never drags browser-only code into a node bundle. Packs run in
+// order: cached clips fly by, so each daily quota window drains into the
+// first pack that still has uncached clips.
+const PACKS: { vocabulary: VocabItem[]; variants: Partial<Record<DialectId, string>> }[] = [
+  {
+    vocabulary: VOCABULARY_LIST_IT,
+    variants: {
+      italien_standard: 'Standard Italian',
+      milanais: 'Northern Italian',
+      romanesco: 'Roman Italian',
+      napolitain: 'Neapolitan Italian'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_MD,
+    variants: {
+      mandarin_standard: 'Standard Mandarin Chinese',
+      pekinois: 'Beijing Mandarin Chinese',
+      taiwanais: 'Taiwanese Mandarin Chinese',
+      dongbei: 'Northeastern Mandarin Chinese'
+    }
+  }
+];
 
 interface Job { label: string; dialect: string; text: string; written: string; }
 
 const jobs: Job[] = [];
-for (const [variantId, ttsName] of Object.entries(VARIANTS) as [DialectId, string][]) {
-  const sig = DIALECTS[variantId].signatureWord;
-  jobs.push({ label: `${variantId}/signature`, dialect: ttsName, text: sig.word, written: sig.arabic });
-  for (const item of VOCABULARY_LIST_IT) {
-    const v = item.dialects?.[variantId];
-    jobs.push({
-      label: `${variantId}/${item.id}`,
-      dialect: ttsName,
-      text: v?.phonetic || item.phonetic,
-      written: v?.arabic || item.arabic
-    });
+for (const pack of PACKS) {
+  for (const [variantId, ttsName] of Object.entries(pack.variants) as [DialectId, string][]) {
+    const sig = DIALECTS[variantId].signatureWord;
+    jobs.push({ label: `${variantId}/signature`, dialect: ttsName, text: sig.word, written: sig.arabic });
+    for (const item of pack.vocabulary) {
+      const v = item.dialects?.[variantId];
+      jobs.push({
+        label: `${variantId}/${item.id}`,
+        dialect: ttsName,
+        text: v?.phonetic || item.phonetic,
+        written: v?.arabic || item.arabic
+      });
+    }
   }
 }
 

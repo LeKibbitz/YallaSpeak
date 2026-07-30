@@ -2,7 +2,7 @@
  * A language of the app. Adding one = adding its variants to DialectId,
  * its entry in LANGUAGES (data/languages.ts) and its vocabulary file.
  */
-export type LanguageId = 'arabe' | 'italien';
+export type LanguageId = 'arabe' | 'italien' | 'mandarin';
 
 /**
  * How a language is written. The 'non-latin' group (arabe, thaï, han,
@@ -63,7 +63,11 @@ export type DialectId =
   | 'italien_standard'
   | 'milanais'
   | 'romanesco'
-  | 'napolitain';
+  | 'napolitain'
+  | 'mandarin_standard'
+  | 'pekinois'
+  | 'taiwanais'
+  | 'dongbei';
 
 export interface DialectInfo {
   id: DialectId;

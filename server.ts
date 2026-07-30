@@ -98,6 +98,10 @@ const ALLOWED_DIALECTS = [
   "Northern Italian",
   "Roman Italian",
   "Neapolitan Italian",
+  "Standard Mandarin Chinese",
+  "Beijing Mandarin Chinese",
+  "Taiwanese Mandarin Chinese",
+  "Northeastern Mandarin Chinese",
 ] as const;
 
 const MAX_PROMPT = 500;

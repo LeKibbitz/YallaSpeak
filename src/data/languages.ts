@@ -1,6 +1,7 @@
 import { DialectId, LanguageId, LanguageInfo, ScriptInfo, VocabItem } from '../types';
 import { VOCABULARY_LIST } from './vocabulary';
 import { VOCABULARY_LIST_IT } from './vocabulary.italian';
+import { VOCABULARY_LIST_MD } from './vocabulary.mandarin';
 
 /**
  * Writing systems known to the app. The 'non-latin' group is the heart of
@@ -84,12 +85,28 @@ export const LANGUAGES: Record<LanguageId, LanguageInfo> = {
     defaultVariant: 'italien_standard',
     // Roleplay/sounds/alphabet/coach: Arabic-only content for now
     features: { roleplay: false, hacks: false, alphabet: false, coach: false, sport: false }
+  },
+  mandarin: {
+    id: 'mandarin',
+    name: 'Mandarin du quotidien',
+    flag: '🀄',
+    // "Zǒu ba!" (走吧, "allez, on y va") is the Mandarin "yalla".
+    brandName: 'ZouSpeak',
+    logoGlyph: '走吧',
+    tagline: "Le mandarin qui se parle vraiment, des hutongs de Pékin aux night markets de Taipei.",
+    script: SCRIPTS.han,
+    variantNoun: 'accent régional',
+    variants: ['mandarin_standard', 'pekinois', 'taiwanais', 'dongbei'],
+    defaultVariant: 'mandarin_standard',
+    // Roleplay/sounds/alphabet/coach: Arabic-only content for now
+    features: { roleplay: false, hacks: false, alphabet: false, coach: false, sport: false }
   }
 };
 
 const VOCABULARIES: Record<LanguageId, VocabItem[]> = {
   arabe: VOCABULARY_LIST,
-  italien: VOCABULARY_LIST_IT
+  italien: VOCABULARY_LIST_IT,
+  mandarin: VOCABULARY_LIST_MD
 };
 
 /** Variant ids are globally unique, so the variant alone names its language. */
