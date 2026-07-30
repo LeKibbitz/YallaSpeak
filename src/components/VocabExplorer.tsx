@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Filter, BookOpen, CheckCircle2, Bookmark, Sparkles, HelpCircle, Volume2, Globe } from 'lucide-react';
 import { VocabItem, DialectId, VocabCategory } from '../types';
-import { VOCABULARY_LIST } from '../data/vocabulary';
 import { DIALECTS, CATEGORIES_INFO } from '../data/dialects';
+import { languageInfoOf, scriptOf, vocabularyOf } from '../data/languages';
 import { AudioPlayerButton } from './AudioPlayerButton';
 
 interface VocabExplorerProps {
@@ -25,8 +25,11 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const currentDialectInfo = DIALECTS[selectedDialect];
+  const language = languageInfoOf(selectedDialect);
+  const script = scriptOf(selectedDialect);
+  const vocabulary = vocabularyOf(selectedDialect);
 
-  const filteredList = VOCABULARY_LIST.filter(item => {
+  const filteredList = vocabulary.filter(item => {
     // Category or filter check
     if (selectedCategory === 'saved') {
       if (!savedIds.includes(item.id)) return false;
@@ -70,7 +73,9 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
         <div className="bg-stone-950/80 p-4 rounded-2xl border border-stone-800 flex items-center gap-3 shrink-0">
           <span className="text-3xl">{currentDialectInfo.flag}</span>
           <div>
-            <div className="text-xs text-stone-400">Dialecte Actif</div>
+            <div className="text-xs text-stone-400">
+              {language.variantNoun.charAt(0).toUpperCase() + language.variantNoun.slice(1)} actif
+            </div>
             <div className="text-sm font-bold text-amber-400">{currentDialectInfo.name.split(' ')[0]}</div>
           </div>
         </div>
@@ -108,7 +113,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                 : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             }`}
           >
-            🌟 Tout le vocabulaire ({VOCABULARY_LIST.length})
+            🌟 Tout le vocabulaire ({vocabulary.length})
           </button>
           <button
             onClick={() => setSelectedCategory('saved')}
@@ -247,7 +252,10 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                       {displayPhonetic}
                     </div>
                     <div className="text-right pt-1 border-t border-stone-800/60">
-                      <span className="text-xl sm:text-2xl font-arabic font-bold text-stone-200">
+                      <span
+                        dir={script.direction}
+                        className={`text-xl sm:text-2xl font-bold text-stone-200 ${script.fontClass || ''}`}
+                      >
                         {displayArabic}
                       </span>
                     </div>
@@ -269,8 +277,11 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                       <Globe className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Variantes selon les pays :</span>
                     </div>
-                    {Object.entries(DIALECTS).map(([dId, dInfo]) => {
-                      const dVal = item.dialects?.[dId as DialectId];
+                    {/* Only the variants of the current language: Italian accents
+                        have nothing to say on an Arabic card and vice versa. */}
+                    {language.variants.map((dId) => {
+                      const dInfo = DIALECTS[dId];
+                      const dVal = item.dialects?.[dId];
                       return (
                         <div key={dId} className="flex items-center justify-between bg-stone-950 p-2 rounded-lg">
                           <div className="flex items-center gap-1.5 font-medium text-stone-300">
@@ -284,7 +295,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                             <AudioPlayerButton
                               text={dVal?.phonetic || item.phonetic}
                               arabicText={dVal?.arabic || item.arabic}
-                              dialect={dId as DialectId}
+                              dialect={dId}
                               size="sm"
                             />
                           </div>

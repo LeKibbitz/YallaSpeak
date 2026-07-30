@@ -4,7 +4,11 @@ export const DIALECT_TTS_NAMES: Record<DialectId, string> = {
   levantin: 'Levantine Arabic',
   egyptien: 'Egyptian Arabic',
   darija: 'Moroccan Arabic',
-  golfe: 'Gulf Arabic'
+  golfe: 'Gulf Arabic',
+  italien_standard: 'Standard Italian',
+  milanais: 'Northern Italian',
+  romanesco: 'Roman Italian',
+  napolitain: 'Neapolitan Italian'
 };
 
 /**

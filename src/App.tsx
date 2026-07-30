@@ -16,6 +16,7 @@ import { AICoachModal } from './components/AICoachModal';
 import { SportMode } from './components/SportMode';
 import { DialectId, UserProgress } from './types';
 import { DIALECTS } from './data/dialects';
+import { LANGUAGES, languageInfoOf } from './data/languages';
 import { Sparkles, Trophy, Flame, Globe, ArrowRight, ShieldCheck, Zap, Dumbbell } from 'lucide-react';
 
 const STORAGE_KEY = 'yallaspeak_progress_v1';
@@ -93,6 +94,19 @@ export default function App() {
   };
 
   const activeDialectInfo = DIALECTS[progress.selectedDialect] || DIALECTS.levantin;
+  const activeLanguage = languageInfoOf(activeDialectInfo.id);
+
+  // A tab hidden for the current language must not stay active
+  // (e.g. switching to Italian while on the Alphabet tab).
+  const featureOfTab: Record<string, boolean> = {
+    roleplay: activeLanguage.features.roleplay,
+    hacks: activeLanguage.features.hacks,
+    alphabet: activeLanguage.features.alphabet
+  };
+  useEffect(() => {
+    if (featureOfTab[activeTab] === false) setActiveTab('speed');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress.selectedDialect, activeTab]);
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950 pb-20">
@@ -116,10 +130,10 @@ export default function App() {
                 <Zap className="w-3.5 h-3.5 fill-stone-950" /> La Loi des 80/20
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white">
-                Bienvenue dans la méthode super accélérée pour parler l'arabe du quotidien !
+                Bienvenue dans la méthode super accélérée pour parler la langue du quotidien !
               </h2>
               <p className="text-xs sm:text-sm text-stone-300">
-                Pourquoi s'enfermer à apprendre la grammaire littéraire du VIIIe siècle ? Ici, nous enseignons uniquement l'arabe <strong className="text-amber-400">parlé sur le terrain</strong> (cafés, taxis, souks, amitié). Choisissez votre dialecte et entraînez vos réflexes en 5 secondes !
+                Pourquoi s'enfermer dans la grammaire des manuels ? Ici, nous enseignons uniquement la langue <strong className="text-amber-400">parlée sur le terrain</strong> (cafés, taxis, marchés, amitié). Choisissez votre langue et son parler régional, et entraînez vos réflexes en 5 secondes !
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -128,7 +142,7 @@ export default function App() {
                 className="bg-stone-800 hover:bg-stone-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm border border-stone-700 shadow flex items-center gap-2"
               >
                 <span>{activeDialectInfo.flag}</span>
-                <span>Changer de dialecte</span>
+                <span>Changer de langue</span>
               </button>
               <button
                 onClick={() => {
@@ -207,7 +221,7 @@ export default function App() {
       />
 
       {/* Hands-free session: full screen, on top of everything, from any tab */}
-      {isSportOpen && (
+      {isSportOpen && activeLanguage.features.sport && (
         <SportMode
           dialect={progress.selectedDialect}
           onClose={() => setIsSportOpen(false)}
@@ -216,29 +230,37 @@ export default function App() {
 
       {/* Floating Action Buttons on mobile: sport session above the AI coach */}
       <div className="fixed bottom-6 right-6 z-30 sm:hidden flex flex-col items-center gap-3">
-        <button
-          onClick={() => setIsSportOpen(true)}
-          className="bg-stone-900 text-amber-400 p-4 rounded-full shadow-2xl border-2 border-amber-500/60 flex items-center justify-center"
-          title="Mode Sport : séance mains libres"
-        >
-          <Dumbbell className="w-5 h-5" />
-        </button>
-        <button
-          onClick={() => setIsCoachModalOpen(true)}
-          className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-full shadow-2xl border-2 border-emerald-400 flex items-center justify-center animate-bounce"
-          title="Ouvrir le Coach IA"
-        >
-          <span className="text-xl">🤖</span>
-        </button>
+        {activeLanguage.features.sport && (
+          <button
+            onClick={() => setIsSportOpen(true)}
+            className="bg-stone-900 text-amber-400 p-4 rounded-full shadow-2xl border-2 border-amber-500/60 flex items-center justify-center"
+            title="Mode Sport : séance mains libres"
+          >
+            <Dumbbell className="w-5 h-5" />
+          </button>
+        )}
+        {activeLanguage.features.coach && (
+          <button
+            onClick={() => setIsCoachModalOpen(true)}
+            className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 rounded-full shadow-2xl border-2 border-emerald-400 flex items-center justify-center animate-bounce"
+            title="Ouvrir le Coach IA"
+          >
+            <span className="text-xl">🤖</span>
+          </button>
+        )}
       </div>
 
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 border-t border-stone-800/80 text-center text-xs text-stone-500 space-y-2">
         <div className="flex items-center justify-center gap-2 text-stone-400 font-bold">
-          <span className="text-amber-500">⚡ YallaSpeak</span> • La méthode 100% dialectal & vocabulaire quotidien
+          <span className="text-amber-500">⚡ YallaSpeak</span> • La méthode 100% langue parlée & vocabulaire quotidien
         </div>
         <p>
-          Dialectes pris en charge : Levantin (Chami 🇱🇧🇸🇾), Égyptien (Masri 🇪🇬), Maghrébin (Darija 🇲🇦🇩🇿🇹🇳), et Golfe (Khaleeji 🇦🇪🇸🇦).
+          Langues prises en charge :{' '}
+          {Object.values(LANGUAGES)
+            .map((lang) => `${lang.name} ${lang.flag} (${lang.variants.map((v) => DIALECTS[v].flag).join('')})`)
+            .join(', ')}
+          .
         </p>
         <p className="text-[11px] text-stone-600">
           Propulsé par l'IA Gemini 3.6 Flash & synthèse vocale pour une prononciation naturelle en temps réel.

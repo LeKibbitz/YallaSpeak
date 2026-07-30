@@ -16,7 +16,7 @@ import {
   Volume2
 } from 'lucide-react';
 import { DialectId, VocabCategory, VocabItem } from '../types';
-import { VOCABULARY_LIST } from '../data/vocabulary';
+import { scriptOf, vocabularyOf } from '../data/languages';
 import { CATEGORIES_INFO } from '../data/dialects';
 import { ttsUrl, markServerAudioUnavailable } from '../lib/audio';
 import {
@@ -215,9 +215,10 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
   const playbackRef = useRef<PlaybackHandle | null>(null);
   const recorderRef = useRef<Recorder | null>(null);
 
+  const script = scriptOf(selectedDialect);
   const list = useMemo(
-    () => VOCABULARY_LIST.filter((item) => category === 'all' || item.category === category),
-    [category]
+    () => vocabularyOf(selectedDialect).filter((item) => category === 'all' || item.category === category),
+    [category, selectedDialect]
   );
   const item: VocabItem | undefined = list[index % (list.length || 1)];
   const variant = item?.dialects?.[selectedDialect];
@@ -462,7 +463,10 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="text-center space-y-1.5 min-w-0">
-            <div dir="rtl" className="text-2xl sm:text-4xl font-black text-white leading-snug font-arabic">
+            <div
+              dir={script.direction}
+              className={`text-2xl sm:text-4xl font-black text-white leading-snug ${script.fontClass || ''}`}
+            >
               {arabic}
             </div>
             <div className="text-amber-400 font-bold text-base sm:text-lg">{phonetic}</div>

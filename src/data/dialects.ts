@@ -56,6 +56,65 @@ export const DIALECTS: Record<DialectId, DialectInfo> = {
       arabic: "يا مرحبا الساع / أبشر"
     },
     popularMedia: "Podcasts de Dubaï et Abu Dhabi, poésie bédouine (Nabati), séries Khaleeji et rencontres au Majlis."
+  },
+
+  /* ------------------------- Italien ------------------------- */
+
+  italien_standard: {
+    id: 'italien_standard',
+    name: 'Italien standard (Toscan)',
+    flag: '🇮🇹',
+    countries: ['Toute l\'Italie', 'Tessin (Suisse)'],
+    description: "L'italien de la télé, des livres et de Florence. Compris partout de Milan à Palerme : c'est la base à maîtriser avant de jouer avec les accents régionaux.",
+    vibe: "Clair, mélodieux, élégant et universel.",
+    signatureWord: {
+      word: "Che bello!",
+      meaning: "Comme c'est beau ! (l'enthousiasme italien par défaut)",
+      arabic: "Che bello!"
+    },
+    popularMedia: "Cinéma de Sorrentino, séries RAI, chansons de Lucio Battisti et Måneskin."
+  },
+  milanais: {
+    id: 'milanais',
+    name: 'Nord (Milanais / Settentrionale)',
+    flag: '🏔️',
+    countries: ['Milan', 'Lombardie', 'Piémont', 'Vénétie'],
+    description: "L'italien du business et du design, débit rapide et voyelles fermées. Ponctué d'expressions du Nord et d'anglicismes de bureau.",
+    vibe: "Efficace, pressé, branché et un brin snob.",
+    signatureWord: {
+      word: "Figo!",
+      meaning: "Cool / classe ! (l'adjectif passe-partout du Nord)",
+      arabic: "Figo!"
+    },
+    popularMedia: "Fashion week de Milan, football de San Siro, rap milanais (Sfera Ebbasta, Lazza)."
+  },
+  romanesco: {
+    id: 'romanesco',
+    name: 'Rome (Romanesco)',
+    flag: '🏛️',
+    countries: ['Rome', 'Latium'],
+    description: "Le parler gouailleur de la capitale : consonnes qui tombent, humour cash et théâtralité permanente. La langue des trattorie et du ciné italien classique.",
+    vibe: "Gouailleur, chaleureux, moqueur et théâtral.",
+    signatureWord: {
+      word: "Daje!",
+      meaning: "Allez ! / Vas-y ! (l'encouragement romain universel)",
+      arabic: "Daje!"
+    },
+    popularMedia: "Films d'Alberto Sordi et Verdone, séries Suburra et SKAM Italia, l'AS Roma."
+  },
+  napolitain: {
+    id: 'napolitain',
+    name: 'Sud (Napolitain / Meridionale)',
+    flag: '🌋',
+    countries: ['Naples', 'Campanie', 'Sud de l\'Italie'],
+    description: "L'italien le plus expressif : gestes, musicalité et cœur sur la main. Teinté de napolitain, la langue de la pizza, de Maradona et de la sceneggiata.",
+    vibe: "Passionné, généreux, dramatique et débordant de vie.",
+    signatureWord: {
+      word: "Uè, jamme!",
+      meaning: "Hé, allons-y ! (le cri de ralliement napolitain)",
+      arabic: "Uè, jamme!"
+    },
+    popularMedia: "Gomorra, L'amica geniale, chansons de Pino Daniele, stade Diego Maradona."
   }
 };
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Zap, Flame, Trophy, RotateCcw, Volume2, ArrowRight, Eye, CheckCircle2, AlertCircle, Sparkles, Filter } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { VocabItem, DialectId, VocabCategory } from '../types';
-import { VOCABULARY_LIST } from '../data/vocabulary';
 import { DIALECTS, CATEGORIES_INFO } from '../data/dialects';
+import { languageOf, scriptOf, vocabularyOf } from '../data/languages';
 import { AudioPlayerButton } from './AudioPlayerButton';
 import { prefetchAudio } from '../lib/audio';
 
@@ -27,8 +27,11 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [streakInSession, setStreakInSession] = useState(0);
 
+  const vocabulary = vocabularyOf(selectedDialect);
+  const script = scriptOf(selectedDialect);
+
   // Filter items
-  const filteredList = VOCABULARY_LIST.filter(item => {
+  const filteredList = vocabulary.filter(item => {
     if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
     return true;
   });
@@ -156,7 +159,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
             <div className="text-xs text-stone-400">Maîtrisés</div>
             <div className="text-lg font-black text-emerald-400 flex items-center justify-center gap-1">
               <Trophy className="w-4 h-4" />
-              <span>{masteredIds.length} / {VOCABULARY_LIST.length}</span>
+              <span>{masteredIds.length} / {vocabulary.length}</span>
             </div>
           </div>
         </div>
@@ -233,7 +236,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
           {/* Question / French phrase */}
           <div className="w-full">
             <div className="text-xs font-bold uppercase tracking-widest text-amber-400/80 mb-3">
-              Comment dit-on en arabe parlé ({DIALECTS[selectedDialect].name.split(' ')[0]}) ?
+              Comment dit-on en {languageOf(selectedDialect)} ({DIALECTS[selectedDialect].name.split(' ')[0]}) ?
             </div>
             <h3 className="text-2xl sm:text-4xl font-black text-white px-4 leading-tight">
               "{currentItem.french}"
@@ -275,9 +278,12 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
                   </div>
                 </div>
 
-                {/* Arabic Script & Audio */}
+                {/* Written form & Audio */}
                 <div className="flex items-center justify-center gap-4 pt-2 border-t border-stone-800">
-                  <span className="text-2xl sm:text-3xl font-arabic font-bold text-white">
+                  <span
+                    dir={script.direction}
+                    className={`text-2xl sm:text-3xl font-bold text-white ${script.fontClass || ''}`}
+                  >
                     {dialectData.arabic || currentItem.arabic}
                   </span>
                   <AudioPlayerButton
@@ -335,7 +341,11 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
       {/* Footer hint */}
       <div className="text-center text-xs text-stone-400 flex items-center justify-center gap-2">
         <Sparkles className="w-4 h-4 text-amber-400" />
-        <span>Astuce Turbo : Ne cherchez pas à écrire l'arabe au début ! Écoutez, répétez à haute voix et mémorisez le son.</span>
+        <span>
+          {script.phoneticFirst
+            ? "Astuce Turbo : Ne cherchez pas à lire l'écriture au début ! Écoutez, répétez à haute voix et mémorisez le son."
+            : "Astuce Turbo : Écoutez, répétez à haute voix et mémorisez la musique de la phrase avant de la lire."}
+        </span>
       </div>
     </div>
   );

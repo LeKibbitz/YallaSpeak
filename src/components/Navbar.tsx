@@ -2,6 +2,7 @@ import React from 'react';
 import { Zap, Flame, Trophy, BookOpen, MessageSquare, Mic, Bot, Globe, ChevronDown, PenLine, Dumbbell, Clapperboard } from 'lucide-react';
 import { DialectId, UserProgress } from '../types';
 import { DIALECTS } from '../data/dialects';
+import { languageInfoOf } from '../data/languages';
 
 interface NavbarProps {
   activeTab: string;
@@ -21,14 +22,23 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSport
 }) => {
   const currentDialect = DIALECTS[progress.selectedDialect] || DIALECTS.levantin;
+  const language = languageInfoOf(currentDialect.id);
 
-  const navItems = [
+  // speed / vocab / studio work for every language; the rest depends on
+  // whether the language pack ships that content yet.
+  const navItems: { id: string; label: string; icon: React.ElementType; badge?: string }[] = [
     { id: 'speed', label: 'Mode Éclair (Speed 5s)', icon: Zap, badge: '⚡ Turbo' },
     { id: 'vocab', label: 'Les 500 Mots d\'Or', icon: BookOpen },
-    { id: 'roleplay', label: 'Simulateur de Rue', icon: MessageSquare, badge: 'IA' },
+    ...(language.features.roleplay
+      ? [{ id: 'roleplay', label: 'Simulateur de Rue', icon: MessageSquare, badge: 'IA' }]
+      : []),
     { id: 'studio', label: 'Studio Doublage', icon: Clapperboard, badge: 'Nouveau' },
-    { id: 'hacks', label: 'Sons & Prononciation', icon: Mic },
-    { id: 'alphabet', label: 'Alphabet', icon: PenLine, badge: 'Écriture' }
+    ...(language.features.hacks
+      ? [{ id: 'hacks', label: 'Sons & Prononciation', icon: Mic }]
+      : []),
+    ...(language.features.alphabet
+      ? [{ id: 'alphabet', label: 'Alphabet', icon: PenLine, badge: 'Écriture' }]
+      : [])
   ];
 
   return (
@@ -62,10 +72,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenDialectSelector}
               className="flex items-center gap-2 bg-stone-800 hover:bg-stone-700/80 text-stone-200 border border-stone-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:border-amber-500/50"
-              title="Changer de dialecte cible"
+              title="Changer de langue ou de dialecte cible"
             >
               <span className="text-base sm:text-lg">{currentDialect.flag}</span>
-              <span className="hidden md:inline text-amber-400 font-bold">Dialecte :</span>
+              {/* First word of the variant noun, capitalized: "Dialecte", "Accent" */}
+              <span className="hidden md:inline text-amber-400 font-bold">
+                {language.variantNoun.split(' ')[0].charAt(0).toUpperCase() + language.variantNoun.split(' ')[0].slice(1)} :
+              </span>
               <span className="truncate max-w-[100px] sm:max-w-[150px]">{currentDialect.name.split(' ')[0]}</span>
               <ChevronDown className="w-3.5 h-3.5 text-stone-400" />
             </button>
@@ -83,7 +96,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             </div>
 
-            {/* Hands-free sport session: reachable from every tab, always */}
+            {/* Hands-free sport session: reachable from every tab (when the language ships it) */}
+            {language.features.sport && (
             <button
               onClick={onOpenSport}
               title="Mode sport : séance mains libres"
@@ -92,8 +106,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Dumbbell className="w-4 h-4" />
               <span className="hidden sm:inline">Mode Sport</span>
             </button>
+            )}
 
             {/* IA Coach Button */}
+            {language.features.coach && (
             <button
               onClick={onOpenCoach}
               className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm shadow-lg shadow-emerald-900/40 transition-all duration-200 active:scale-95 border border-emerald-400/30 animate-pulse hover:animate-none"
@@ -102,6 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="hidden sm:inline">Coach Sidi Hakim</span>
               <span className="sm:hidden">IA</span>
             </button>
+            )}
           </div>
         </div>
       </div>

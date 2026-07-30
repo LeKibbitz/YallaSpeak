@@ -94,6 +94,10 @@ const ALLOWED_DIALECTS = [
   "Egyptian Arabic",
   "Moroccan Arabic",
   "Gulf Arabic",
+  "Standard Italian",
+  "Northern Italian",
+  "Roman Italian",
+  "Neapolitan Italian",
 ] as const;
 
 const MAX_PROMPT = 500;
@@ -398,16 +402,21 @@ function countCachedAudio(): number {
  * Gemini reads punctuation and parenthetical glosses out loud, so the source
  * strings ("Khallas (خلاص = Fini/D'accord)") must be reduced to the spoken part.
  */
-export function speakablePart(arabicText: string, phonetic: string): string {
-  const arabicOnly = arabicText.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
-  if (/[\u0600-\u06FF]/.test(arabicOnly)) {
+export function speakablePart(writtenText: string, phonetic: string): string {
+  // The written form wins whenever present: Arabic is filtered down to its
+  // script; Latin-script languages (Italian...) are spoken as written, since
+  // their phonetic field is a French-friendly reading, not something a native
+  // TTS voice should pronounce. Phonetic remains the last resort only.
+  const written = writtenText.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+  if (/[\u0600-\u06FF]/.test(written)) {
     // Drop everything that is not Arabic script, digits or basic separators
-    const cleaned = arabicOnly
+    const cleaned = written
       .replace(/[^\u0600-\u06FF0-9\s\/\u060C\u061F!.]/g, " ")
       .replace(/\s+/g, " ")
       .trim();
     if (cleaned) return cleaned;
   }
+  if (written) return written;
   return phonetic.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
 }
 
