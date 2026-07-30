@@ -24,6 +24,16 @@ const BASE = process.env.PREGEN_BASE || 'https://yallaspeak.lekibbitz.fr';
 // order: cached clips fly by, so each daily quota window drains into the
 // first pack that still has uncached clips.
 const PACKS: { vocabulary: VocabItem[]; variants: Partial<Record<DialectId, string>> }[] = [
+  // Thai first: it is the pack currently being tested in prod, so tomorrow's
+  // quota window fills its cache before the untouched packs.
+  {
+    vocabulary: VOCABULARY_LIST_TH,
+    variants: {
+      thai_central: 'Central Thai',
+      isan: 'Isan Thai',
+      thai_nord: 'Northern Thai'
+    }
+  },
   {
     vocabulary: VOCABULARY_LIST_IT,
     variants: {
@@ -40,14 +50,6 @@ const PACKS: { vocabulary: VocabItem[]; variants: Partial<Record<DialectId, stri
       pekinois: 'Beijing Mandarin Chinese',
       taiwanais: 'Taiwanese Mandarin Chinese',
       dongbei: 'Northeastern Mandarin Chinese'
-    }
-  },
-  {
-    vocabulary: VOCABULARY_LIST_TH,
-    variants: {
-      thai_central: 'Central Thai',
-      isan: 'Isan Thai',
-      thai_nord: 'Northern Thai'
     }
   },
   {

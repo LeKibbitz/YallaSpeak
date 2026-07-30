@@ -11,7 +11,6 @@ import { RoleplaySimulator } from './components/RoleplaySimulator';
 import { StudioMode } from './components/StudioMode';
 import { PronunciationGuide } from './components/PronunciationGuide';
 import { AlphabetExplorer } from './components/AlphabetExplorer';
-import { DialectSelectorModal } from './components/DialectSelectorModal';
 import { AICoachModal } from './components/AICoachModal';
 import { SportMode } from './components/SportMode';
 import { DialectId, UserProgress } from './types';
@@ -41,7 +40,6 @@ export default function App() {
     }
   });
 
-  const [isDialectModalOpen, setIsDialectModalOpen] = useState(false);
   const [isCoachModalOpen, setIsCoachModalOpen] = useState(false);
   const [isSportOpen, setIsSportOpen] = useState(false);
   const [hasSeenIntro, setHasSeenIntro] = useState(() => {
@@ -109,14 +107,17 @@ export default function App() {
   }, [progress.selectedDialect, activeTab]);
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950 pb-20">
-      
+    <div
+      className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950 pb-20"
+      style={{ ['--accent' as string]: activeLanguage.accent }}
+    >
+
       {/* Navigation */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         progress={progress}
-        onOpenDialectSelector={() => setIsDialectModalOpen(true)}
+        onSelectDialect={handleSelectDialect}
         onOpenCoach={() => setIsCoachModalOpen(true)}
         onOpenSport={() => setIsSportOpen(true)}
       />
@@ -137,13 +138,6 @@ export default function App() {
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
-              <button
-                onClick={() => setIsDialectModalOpen(true)}
-                className="bg-stone-800 hover:bg-stone-700 text-amber-400 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm border border-stone-700 shadow flex items-center gap-2"
-              >
-                <span>{activeDialectInfo.flag}</span>
-                <span>Changer de langue</span>
-              </button>
               <button
                 onClick={() => {
                   setHasSeenIntro(true);
@@ -205,14 +199,6 @@ export default function App() {
         )}
       </main>
 
-      {/* Dialect Selector Modal */}
-      <DialectSelectorModal
-        isOpen={isDialectModalOpen}
-        onClose={() => setIsDialectModalOpen(false)}
-        selectedDialect={progress.selectedDialect}
-        onSelect={handleSelectDialect}
-      />
-
       {/* AI Coach Sidi Hakim Modal */}
       <AICoachModal
         isOpen={isCoachModalOpen}
@@ -253,7 +239,7 @@ export default function App() {
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 border-t border-stone-800/80 text-center text-xs text-stone-500 space-y-2">
         <div className="flex items-center justify-center gap-2 text-stone-400 font-bold">
-          <span className="text-amber-500">⚡ {activeLanguage.brandName}</span> • La méthode 100% langue parlée & vocabulaire quotidien
+          <span style={{ color: activeLanguage.accent }}>⚡ {activeLanguage.brandName}</span> • La méthode 100% langue parlée & vocabulaire quotidien
         </div>
         <p>
           {Object.keys(LANGUAGES).length} langues, {Object.keys(DIALECTS).length} parlers régionaux :{' '}

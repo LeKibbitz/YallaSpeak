@@ -46,6 +46,8 @@ export interface LanguageInfo {
   /** Short interjection shown in the logo square ("يلا", "Dai!"). */
   logoGlyph: string;
   script: ScriptInfo;
+  /** Brand accent color (hex). Drives the chrome (logo, tabs, selects) per language. */
+  accent: string;
   /** What the variants are called in this language ("dialecte", "accent régional"...). */
   variantNoun: string;
   variants: DialectId[];

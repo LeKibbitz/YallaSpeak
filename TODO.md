@@ -7,6 +7,8 @@
 - [x] Recharger les crédits Gemini prépayés (10 € le 30/07, auto-reload 10 € sous 1 €, max 1x/mois)
 - [x] Pack mandarin : 52 items, accents standard/pékinois/taïwanais/dongbei, marque ZouSpeak (走吧), pinyin à tons + hanzi (eb1fdfd)
 - [x] Sélecteur deux étapes : langue d'abord, puis ses variantes (modal DialectSelectorModal)
+- [x] Deux listes déroulantes dans la barre du haut (langue puis parler), modal supprimé
+- [x] Code couleur par langue : champ accent hex dans LANGUAGES, appliqué au logo, titre, badge, onglets, selects, footer
 - [x] 7 nouveaux packs : thaï (PaiSpeak), japonais (IkuzoSpeak), russe (DavaiSpeak), grec (PameSpeak), malgache (AndaoSpeak), espagnol (VamosSpeak), portugais (BoraSpeak) : 21 variantes, 52 items chacun
-- [ ] Pré-générer le cache TTS des 9 packs : 110/1553 clips en cache au 30/07 (coût mesuré : ~0,12 €/100 clips). Quota Tier 1 : 100 générations/jour sur gemini-3.1-flash-tts, reset ~09h heure FR, non reportable. Relancer chaque matin `cd ~/projects/YallaSpeak && node .tmp/pregen-tts.cjs` (rebuild : `npx esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs`). Le script enchaîne les packs et draine 100 générations par fenêtre : ~15 matinées restantes (31/07 → mi-août)
+- [ ] Pré-générer le cache TTS des 9 packs : 110/1553 clips en cache au 30/07 (coût mesuré : ~0,12 €/100 clips). Quota Tier 1 : 100 générations/jour sur gemini-3.1-flash-tts, reset ~09h heure FR, non reportable. Relancer chaque matin `cd ~/projects/YallaSpeak && node .tmp/pregen-tts.cjs` (rebuild : `npx esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs`). Le script enchaîne les packs et draine 100 générations par fenêtre : ~15 matinées restantes (31/07 → mi-août). Ordre des packs : thaï en premier (testé en prod), puis IT, MD, JP, RU, EL, MG, ES, PT
 - [ ] Décider du nom générique de la plateforme (les marques par langue restent : YallaSpeak, ZouSpeak, PaiSpeak...)
