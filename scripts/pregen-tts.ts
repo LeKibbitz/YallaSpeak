@@ -1,0 +1,103 @@
+/**
+ * Pre-generate the TTS disk cache by walking a language pack and requesting
+ * every phrase x variant against the production endpoint. Each phrase is
+ * generated once, then served from cache forever.
+ *
+ * Usage: esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs && node .tmp/pregen-tts.cjs
+ */
+import { VOCABULARY_LIST_IT } from '../src/data/vocabulary.italian';
+import { DIALECTS } from '../src/data/dialects';
+import { DialectId } from '../src/types';
+
+const BASE = process.env.PREGEN_BASE || 'https://yallaspeak.lekibbitz.fr';
+
+// Kept in sync with DIALECT_TTS_NAMES (src/lib/audio.ts); duplicated here so
+// the script never drags browser-only code into a node bundle.
+const VARIANTS: Partial<Record<DialectId, string>> = {
+  italien_standard: 'Standard Italian',
+  milanais: 'Northern Italian',
+  romanesco: 'Roman Italian',
+  napolitain: 'Neapolitan Italian'
+};
+
+interface Job { label: string; dialect: string; text: string; written: string; }
+
+const jobs: Job[] = [];
+for (const [variantId, ttsName] of Object.entries(VARIANTS) as [DialectId, string][]) {
+  const sig = DIALECTS[variantId].signatureWord;
+  jobs.push({ label: `${variantId}/signature`, dialect: ttsName, text: sig.word, written: sig.arabic });
+  for (const item of VOCABULARY_LIST_IT) {
+    const v = item.dialects?.[variantId];
+    jobs.push({
+      label: `${variantId}/${item.id}`,
+      dialect: ttsName,
+      text: v?.phonetic || item.phonetic,
+      written: v?.arabic || item.arabic
+    });
+  }
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function main() {
+  let ok = 0, failed = 0, bytes = 0;
+  const t0 = Date.now();
+  for (const [i, job] of jobs.entries()) {
+    const url = `${BASE}/api/tts?dialect=${encodeURIComponent(job.dialect)}&text=${encodeURIComponent(job.text)}&arabic=${encodeURIComponent(job.written)}`;
+    let attempts = 0;
+    let cacheHit = false;
+    while (true) {
+      attempts++;
+      try {
+        const tReq = Date.now();
+        const res = await fetch(url);
+        if (res.ok) {
+          const buf = await res.arrayBuffer();
+          bytes += buf.byteLength;
+          ok++;
+          // A sub-second response is a disk cache hit on the server: no Gemini
+          // call happened, so no need to pace for the per-minute quota.
+          cacheHit = Date.now() - tReq < 1000;
+          console.log(`[${i + 1}/${jobs.length}] OK ${job.label} (${(buf.byteLength / 1024).toFixed(0)} kB${cacheHit ? ', cached' : ''})`);
+          break;
+        }
+        const body = await res.text();
+        if (res.status === 429 && attempts <= 5) {
+          const retryAfter = Number(JSON.parse(body).retryAfter) || 60;
+          if (retryAfter > 600) {
+            // Not a per-minute rate limit: daily quota or depleted credits.
+            console.log(`[${i + 1}/${jobs.length}] 429 retryAfter=${retryAfter}s on ${job.label}, credits/daily quota exhausted, aborting.`);
+            failed++;
+            printSummary(ok, failed, bytes, t0);
+            return;
+          }
+          console.log(`[${i + 1}/${jobs.length}] rate limited on ${job.label}, waiting ${retryAfter + 2}s...`);
+          await sleep((retryAfter + 2) * 1000);
+          continue;
+        }
+        failed++;
+        console.log(`[${i + 1}/${jobs.length}] HTTP ${res.status} ${job.label}: ${body.slice(0, 120)}`);
+        break;
+      } catch (e) {
+        if (attempts <= 5) {
+          console.log(`[${i + 1}/${jobs.length}] network error on ${job.label}, retrying in 10s: ${e}`);
+          await sleep(10000);
+          continue;
+        }
+        failed++;
+        console.log(`[${i + 1}/${jobs.length}] ERROR ${job.label}: ${e}`);
+        break;
+      }
+    }
+    // ~8 requests/min steady state to stay under the tier 1 per-minute quota.
+    if (!cacheHit) await sleep(7000);
+  }
+  printSummary(ok, failed, bytes, t0);
+}
+
+function printSummary(ok: number, failed: number, bytes: number, t0: number) {
+  const mins = ((Date.now() - t0) / 60000).toFixed(1);
+  console.log(`\nDone: ${ok} generated/cached, ${failed} failed, ${(bytes / 1024 / 1024).toFixed(1)} MB of audio, ${mins} min.`);
+}
+
+main();
