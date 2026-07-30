@@ -108,7 +108,7 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950 pb-20"
+      className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-accent selection:text-stone-950 pb-20"
       style={{ ['--accent' as string]: activeLanguage.accent }}
     >
 
@@ -124,17 +124,17 @@ export default function App() {
 
       {/* Intro Welcome Banner (only if not dismissed or first time) */}
       {!hasSeenIntro && (
-        <div className="bg-gradient-to-r from-amber-500/20 via-stone-900 to-emerald-500/20 border-b border-stone-800">
+        <div className="bg-gradient-to-r from-accent/20 via-stone-900 to-emerald-500/20 border-b border-stone-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 max-w-3xl">
-              <div className="inline-flex items-center gap-1.5 bg-amber-500 text-stone-950 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 bg-accent text-stone-950 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
                 <Zap className="w-3.5 h-3.5 fill-stone-950" /> La Loi des 80/20
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white">
                 Bienvenue dans la méthode super accélérée pour parler la langue du quotidien !
               </h2>
               <p className="text-xs sm:text-sm text-stone-300">
-                Pourquoi s'enfermer dans la grammaire des manuels ? Ici, nous enseignons uniquement la langue <strong className="text-amber-400">parlée sur le terrain</strong> (cafés, taxis, marchés, amitié). Choisissez votre langue et son parler régional, et entraînez vos réflexes en 5 secondes !
+                Pourquoi s'enfermer dans la grammaire des manuels ? Ici, nous enseignons uniquement la langue <strong className="text-accent">parlée sur le terrain</strong> (cafés, taxis, marchés, amitié). Choisissez votre langue et son parler régional, et entraînez vos réflexes en 5 secondes !
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -143,7 +143,7 @@ export default function App() {
                   setHasSeenIntro(true);
                   localStorage.setItem('yallaspeak_intro_seen', 'true');
                 }}
-                className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-all active:scale-95"
+                className="bg-accent hover:brightness-110 text-stone-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-accent/20 flex items-center gap-2 transition-all active:scale-95"
               >
                 <span>Yalla ! C'est parti</span>
                 <ArrowRight className="w-4 h-4" />
@@ -219,7 +219,7 @@ export default function App() {
         {activeLanguage.features.sport && (
           <button
             onClick={() => setIsSportOpen(true)}
-            className="bg-stone-900 text-amber-400 p-4 rounded-full shadow-2xl border-2 border-amber-500/60 flex items-center justify-center"
+            className="bg-stone-900 text-accent p-4 rounded-full shadow-2xl border-2 border-accent/60 flex items-center justify-center"
             title="Mode Sport : séance mains libres"
           >
             <Dumbbell className="w-5 h-5" />

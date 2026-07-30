@@ -117,7 +117,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
         <p>Aucun mot dans cette catégorie pour le moment.</p>
         <button
           onClick={() => setSelectedCategory('all')}
-          className="mt-4 bg-amber-500 text-stone-950 font-bold px-6 py-2 rounded-xl"
+          className="mt-4 bg-accent text-stone-950 font-bold px-6 py-2 rounded-xl"
         >
           Voir tout le vocabulaire
         </button>
@@ -134,8 +134,8 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
       {/* Header Info Banner */}
       <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 p-6 rounded-3xl border border-stone-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
-            <Zap className="w-3.5 h-3.5 fill-amber-400" /> Le Cœur de la Méthode Accélérée
+          <div className="inline-flex items-center gap-2 bg-accent/20 text-accent border border-accent/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+            <Zap className="w-3.5 h-3.5 fill-accent" /> Le Cœur de la Méthode Accélérée
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-white">
             Mode Éclair (Speed 5 Secondes)
@@ -149,8 +149,8 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
         <div className="flex items-center gap-3 bg-stone-950/80 p-3 rounded-2xl border border-stone-800 shrink-0">
           <div className="text-center px-3">
             <div className="text-xs text-stone-400">Série actuelle</div>
-            <div className="text-lg font-black text-amber-400 flex items-center justify-center gap-1">
-              <Flame className="w-4 h-4 fill-amber-400" />
+            <div className="text-lg font-black text-accent flex items-center justify-center gap-1">
+              <Flame className="w-4 h-4 fill-accent" />
               <span>{streakInSession}</span>
             </div>
           </div>
@@ -175,7 +175,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
           onClick={() => { setSelectedCategory('all'); setCurrentIndex(0); }}
           className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
             selectedCategory === 'all'
-              ? 'bg-amber-500 text-stone-950 shadow'
+              ? 'bg-accent text-stone-950 shadow'
               : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
           }`}
         >
@@ -187,7 +187,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
             onClick={() => { setSelectedCategory(key as VocabCategory); setCurrentIndex(0); }}
             className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
               selectedCategory === key
-                ? 'bg-amber-500 text-stone-950 shadow'
+                ? 'bg-accent text-stone-950 shadow'
                 : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             }`}
           >
@@ -223,7 +223,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
           <div className="w-full bg-stone-950 h-2 relative">
             <div
               className={`h-full transition-all duration-1000 linear ${
-                timeLeft <= 2 ? 'bg-red-500' : timeLeft <= 3 ? 'bg-amber-500' : 'bg-emerald-500'
+                timeLeft <= 2 ? 'bg-red-500' : timeLeft <= 3 ? 'bg-accent' : 'bg-emerald-500'
               }`}
               style={{ width: `${100 - progressPercent}%` }}
             />
@@ -235,7 +235,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
           
           {/* Question / French phrase */}
           <div className="w-full">
-            <div className="text-xs font-bold uppercase tracking-widest text-amber-400/80 mb-3">
+            <div className="text-xs font-bold uppercase tracking-widest text-accent/80 mb-3">
               Comment dit-on en {languageOf(selectedDialect)} ({DIALECTS[selectedDialect].name.split(' ')[0]}) ?
             </div>
             <h3 className="text-2xl sm:text-4xl font-black text-white px-4 leading-tight">
@@ -254,26 +254,26 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
               <div className="flex flex-col items-center justify-center space-y-4 py-4">
                 <div 
                   onClick={() => setIsRevealed(true)}
-                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-stone-800 to-stone-900 border-4 border-amber-500/50 flex items-center justify-center cursor-pointer shadow-lg hover:scale-105 transition-transform group"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-stone-800 to-stone-900 border-4 border-accent/50 flex items-center justify-center cursor-pointer shadow-lg hover:scale-105 transition-transform group"
                 >
-                  <span className="text-3xl sm:text-4xl font-black text-amber-400 group-hover:hidden">
+                  <span className="text-3xl sm:text-4xl font-black text-accent group-hover:hidden">
                     {timeLeft}s
                   </span>
-                  <Eye className="w-8 h-8 text-amber-400 hidden group-hover:block" />
+                  <Eye className="w-8 h-8 text-accent hidden group-hover:block" />
                 </div>
                 <p className="text-xs text-stone-400 max-w-sm animate-pulse">
                   🗣️ Prononcez-le à voix haute maintenant ! Cliquez sur le chrono ou le bouton pour vérifier.
                 </p>
               </div>
             ) : (
-              <div className="bg-stone-950/80 rounded-2xl p-6 border border-amber-500/30 space-y-4 animate-scaleUp">
+              <div className="bg-stone-950/80 rounded-2xl p-6 border border-accent/30 space-y-4 animate-scaleUp">
                 
                 {/* Large Phonetic Arabizi */}
                 <div>
                   <div className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">
                     Phonétique Française (À lire comme ça s'écrit) :
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-amber-400 tracking-wide mt-1 font-mono">
+                  <div className="text-2xl sm:text-3xl font-black text-accent tracking-wide mt-1 font-mono">
                     {dialectData.phonetic || currentItem.phonetic}
                   </div>
                 </div>
@@ -297,8 +297,8 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
 
                 {/* Tip / Cultural Note */}
                 {(dialectData.note || currentItem.tip) && (
-                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-left flex items-start gap-2 text-xs text-amber-200 mt-3">
-                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <div className="bg-accent/10 border border-accent/20 rounded-xl p-3 text-left flex items-start gap-2 text-xs text-accent mt-3">
+                    <Sparkles className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                     <span>{dialectData.note || currentItem.tip}</span>
                   </div>
                 )}
@@ -311,7 +311,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
             {!isRevealed ? (
               <button
                 onClick={() => setIsRevealed(true)}
-                className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black px-8 py-4 rounded-2xl text-base shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 transition-all active:scale-95"
+                className="w-full sm:w-auto bg-gradient-to-r from-accent to-accent/80 hover:brightness-110 text-stone-950 font-black px-8 py-4 rounded-2xl text-base shadow-lg shadow-accent/20 flex items-center justify-center gap-2 transition-all active:scale-95"
               >
                 <Eye className="w-5 h-5" />
                 <span>Révéler la prononciation</span>
@@ -322,7 +322,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
                   onClick={handleReview}
                   className="w-full sm:w-1/2 bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold px-6 py-3.5 rounded-2xl text-sm border border-stone-700 flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
-                  <RotateCcw className="w-4 h-4 text-amber-400" />
+                  <RotateCcw className="w-4 h-4 text-accent" />
                   <span>J'ai hésité / À revoir (+5 XP)</span>
                 </button>
                 <button
@@ -340,7 +340,7 @@ export const SpeedTrainer: React.FC<SpeedTrainerProps> = ({
 
       {/* Footer hint */}
       <div className="text-center text-xs text-stone-400 flex items-center justify-center gap-2">
-        <Sparkles className="w-4 h-4 text-amber-400" />
+        <Sparkles className="w-4 h-4 text-accent" />
         <span>
           {script.phoneticFirst
             ? "Astuce Turbo : Ne cherchez pas à lire l'écriture au début ! Écoutez, répétez à haute voix et mémorisez le son."

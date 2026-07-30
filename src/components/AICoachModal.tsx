@@ -129,7 +129,7 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs text-stone-400 mt-0.5">
-                <span>Dialecte ciblé : <strong className="text-amber-400">{currentDialectInfo.name.split(' ')[0]} {currentDialectInfo.flag}</strong></span>
+                <span>Dialecte ciblé : <strong className="text-accent">{currentDialectInfo.name.split(' ')[0]} {currentDialectInfo.flag}</strong></span>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
               onClick={() => setActiveSituation(sit)}
               className={`px-3 py-1 rounded-full font-semibold whitespace-nowrap transition-all ${
                 activeSituation === sit
-                  ? 'bg-amber-500 text-stone-950'
+                  ? 'bg-accent text-stone-950'
                   : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
               }`}
             >
@@ -178,7 +178,7 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
                   className={`max-w-xl rounded-2xl p-4 sm:p-5 shadow-sm text-sm sm:text-base leading-relaxed ${
                     isHakim
                       ? 'bg-stone-950 border border-stone-800 text-stone-200 rounded-tl-none'
-                      : 'bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-medium rounded-tr-none shadow-md shadow-amber-500/10'
+                      : 'bg-gradient-to-r from-accent to-accent/80 text-stone-950 font-medium rounded-tr-none shadow-md shadow-accent/10'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-4 mb-1 pb-1 border-b border-stone-800/40 text-[10px] opacity-70 font-semibold">
@@ -193,7 +193,7 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
                 </div>
 
                 {!isHakim && (
-                  <div className="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center shrink-0 shadow mt-1">
+                  <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center shrink-0 shadow mt-1">
                     <User className="w-5 h-5 text-stone-950 font-bold" />
                   </div>
                 )}
@@ -214,7 +214,7 @@ Pas de grammaire littéraire ennuyeuse ici ! Demande-moi **n'importe quelle phra
 
         {/* Quick Question Chips */}
         <div className="px-4 py-2 bg-stone-950/80 border-t border-stone-800/80 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
-          <span className="text-[11px] font-bold text-amber-400 shrink-0 flex items-center gap-1">
+          <span className="text-[11px] font-bold text-accent shrink-0 flex items-center gap-1">
             <Sparkles className="w-3.5 h-3.5" /> Suggestions :
           </span>
           {quickQuestions.map((q, idx) => (

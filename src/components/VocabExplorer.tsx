@@ -76,7 +76,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
             <div className="text-xs text-stone-400">
               {language.variantNoun.charAt(0).toUpperCase() + language.variantNoun.slice(1)} actif
             </div>
-            <div className="text-sm font-bold text-amber-400">{currentDialectInfo.name.split(' ')[0]}</div>
+            <div className="text-sm font-bold text-accent">{currentDialectInfo.name.split(' ')[0]}</div>
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
             placeholder="Rechercher par mot français (ex: thé, merci) ou phonétique (ex: baddi, yalla, labas)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-stone-900 border border-stone-700 focus:border-amber-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm sm:text-base text-white placeholder-stone-400 focus:outline-none shadow-inner transition-colors"
+            className="w-full bg-stone-900 border border-stone-700 focus:border-accent rounded-2xl pl-12 pr-4 py-3.5 text-sm sm:text-base text-white placeholder-stone-400 focus:outline-none shadow-inner transition-colors"
           />
           {searchTerm && (
             <button
@@ -109,7 +109,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
             onClick={() => setSelectedCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
               selectedCategory === 'all'
-                ? 'bg-amber-500 text-stone-950 shadow'
+                ? 'bg-accent text-stone-950 shadow'
                 : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             }`}
           >
@@ -119,7 +119,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
             onClick={() => setSelectedCategory('saved')}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
               selectedCategory === 'saved'
-                ? 'bg-amber-500 text-stone-950 shadow'
+                ? 'bg-accent text-stone-950 shadow'
                 : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             }`}
           >
@@ -130,7 +130,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
             onClick={() => setSelectedCategory('mastered')}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
               selectedCategory === 'mastered'
-                ? 'bg-amber-500 text-stone-950 shadow'
+                ? 'bg-accent text-stone-950 shadow'
                 : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             }`}
           >
@@ -143,7 +143,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
               onClick={() => setSelectedCategory(key as VocabCategory)}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
                 selectedCategory === key
-                  ? 'bg-amber-500 text-stone-950 shadow'
+                  ? 'bg-accent text-stone-950 shadow'
                   : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
               }`}
             >
@@ -204,11 +204,11 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                         title={isSaved ? "Retirer des favoris" : "Ajouter aux favoris"}
                         className={`p-1.5 rounded-lg transition-colors ${
                           isSaved
-                            ? 'bg-amber-500/20 text-amber-400'
+                            ? 'bg-accent/20 text-accent'
                             : 'text-stone-500 hover:text-white hover:bg-stone-800'
                         }`}
                       >
-                        <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-amber-400' : ''}`} />
+                        <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-accent' : ''}`} />
                       </button>
                       <button
                         onClick={() => onToggleMastered(item.id)}
@@ -237,7 +237,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                   {/* Phonetic & Arabic Highlight Box */}
                   <div className="bg-stone-950/90 rounded-xl p-3.5 border border-stone-800/80 mb-3 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-amber-400 uppercase tracking-wide flex items-center gap-1">
+                      <span className="text-xs font-bold text-accent uppercase tracking-wide flex items-center gap-1">
                         <span>{currentDialectInfo.flag}</span>
                         <span>Phonétique :</span>
                       </span>
@@ -248,7 +248,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                         size="sm"
                       />
                     </div>
-                    <div className="text-lg sm:text-xl font-black text-amber-300 font-mono tracking-wide">
+                    <div className="text-lg sm:text-xl font-black text-accent font-mono tracking-wide">
                       {displayPhonetic}
                     </div>
                     <div className="text-right pt-1 border-t border-stone-800/60">
@@ -264,7 +264,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                   {/* Tip */}
                   {(dialectVariation?.note || item.tip) && (
                     <div className="text-xs text-stone-300 bg-stone-800/60 rounded-xl p-2.5 flex items-start gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                      <Sparkles className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                       <span>{dialectVariation?.note || item.tip}</span>
                     </div>
                   )}
@@ -289,7 +289,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
                             <span>{dInfo.name.split(' ')[0]} :</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-amber-300 font-bold">
+                            <span className="font-mono text-accent font-bold">
                               {dVal?.phonetic || item.phonetic}
                             </span>
                             <AudioPlayerButton
@@ -307,7 +307,7 @@ export const VocabExplorer: React.FC<VocabExplorerProps> = ({
 
                 <div className="mt-3 pt-2 border-t border-stone-800/60 flex items-center justify-between text-[11px] text-stone-500">
                   <span>Niveau : {"⭐️".repeat(item.difficulty)}</span>
-                  <span className="text-amber-400 font-semibold">
+                  <span className="text-accent font-semibold">
                     {isExpanded ? '▲ Réduire' : '▼ Voir les autres pays'}
                   </span>
                 </div>

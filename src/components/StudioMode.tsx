@@ -406,7 +406,7 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
         <p>Aucune phrase dans cette catégorie.</p>
         <button
           onClick={() => setCategory('all')}
-          className="mt-4 bg-amber-500 text-stone-950 font-bold px-6 py-2 rounded-xl"
+          className="mt-4 bg-accent text-stone-950 font-bold px-6 py-2 rounded-xl"
         >
           Tout le vocabulaire
         </button>
@@ -425,7 +425,7 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
       {/* Header */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center shadow-lg">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-rose-500 to-accent flex items-center justify-center shadow-lg">
             <Clapperboard className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -469,7 +469,7 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
             >
               {arabic}
             </div>
-            <div className="text-amber-400 font-bold text-base sm:text-lg">{phonetic}</div>
+            <div className="text-accent font-bold text-base sm:text-lg">{phonetic}</div>
             <div className="text-stone-400 text-xs sm:text-sm italic">{item.french}</div>
           </div>
           <button
@@ -493,7 +493,7 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
       <div className="bg-stone-900 border border-stone-800 rounded-2xl p-4 sm:p-5 space-y-4">
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-black">
-            <span className="text-amber-400">Référence</span>
+            <span className="text-accent">Référence</span>
             <span className="text-stone-500 normal-case font-semibold tracking-normal">
               {selection
                 ? `Boucle : ${selection.start.toFixed(1)}s → ${selection.end.toFixed(1)}s (glisse pour ajuster, clic pour effacer)`
@@ -544,7 +544,7 @@ export const StudioMode: React.FC<StudioModeProps> = ({ selectedDialect, onAddXp
                 key={n}
                 onClick={() => playReference(n)}
                 disabled={!refBuffer || busy}
-                className="flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-bold bg-stone-800 hover:bg-amber-500 hover:text-stone-950 text-amber-400 transition-colors disabled:opacity-40 disabled:pointer-events-none border-r border-stone-700 last:border-r-0"
+                className="flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-bold bg-stone-800 hover:bg-accent hover:text-stone-950 text-accent transition-colors disabled:opacity-40 disabled:pointer-events-none border-r border-stone-700 last:border-r-0"
                 title={`Écouter la référence ${n} fois`}
               >
                 {n === 1 ? <Volume2 className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}×{n}

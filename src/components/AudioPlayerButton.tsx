@@ -161,7 +161,7 @@ export const AudioPlayerButton: React.FC<AudioPlayerButtonProps> = ({
       title="Écouter la prononciation"
       className={`inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 ${
         state === 'playing'
-          ? 'bg-amber-500 text-white shadow-md animate-pulse'
+          ? 'bg-accent text-white shadow-md animate-pulse'
           : state === 'loading'
           ? 'bg-stone-700 text-stone-300 cursor-wait'
           : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm hover:shadow active:scale-95'

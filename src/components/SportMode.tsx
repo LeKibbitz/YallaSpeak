@@ -336,7 +336,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
       {/* Header */}
       <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-stone-800">
         <div className="flex items-center gap-2 min-w-0">
-          <Dumbbell className="w-5 h-5 text-amber-400 shrink-0" />
+          <Dumbbell className="w-5 h-5 text-accent shrink-0" />
           <span className="font-black tracking-tight truncate">Mode Sport</span>
           <span className="text-xs text-stone-500 hidden sm:inline">mains libres</span>
         </div>
@@ -345,7 +345,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
             phase === 'listening'
               ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
               : phase === 'speaking'
-                ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
+                ? 'bg-accent/15 text-accent border-accent/40'
                 : 'bg-stone-800 text-stone-400 border-stone-700'
           }`}
         >
@@ -375,7 +375,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
               {card.french}
             </p>
             <p
-              className="text-5xl sm:text-7xl text-amber-400 leading-tight"
+              className="text-5xl sm:text-7xl text-accent leading-tight"
               style={{ fontFamily: 'Amiri, serif' }}
               dir="rtl"
             >
@@ -404,7 +404,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
         ) : null}
 
         {!micSupported ? (
-          <div className="flex items-start gap-2 text-left text-xs text-amber-300/90 bg-amber-500/10 border border-amber-500/25 rounded-2xl px-3 py-2 max-w-md">
+          <div className="flex items-start gap-2 text-left text-xs text-accent/90 bg-accent/10 border border-accent/25 rounded-2xl px-3 py-2 max-w-md">
             <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>
               Ce navigateur ne sait pas écouter : la séance se déroule quand même, avec une pause
@@ -429,7 +429,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
               }}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold border whitespace-nowrap transition-colors active:scale-95 ${
                 item.id === themeId
-                  ? 'bg-amber-500 text-stone-950 border-amber-300'
+                  ? 'bg-accent text-stone-950 border-accent'
                   : 'bg-stone-900 text-stone-300 border-stone-800 hover:bg-stone-800'
               }`}
             >
@@ -454,7 +454,7 @@ export const SportMode: React.FC<SportModeProps> = ({ dialect, onClose }) => {
           {running ? 'Pause' : phase === 'paused' ? 'Reprendre' : 'Démarrer la séance'}
         </button>
         <div className="text-right shrink-0">
-          <div className="text-2xl font-black text-amber-400 leading-none">{count}</div>
+          <div className="text-2xl font-black text-accent leading-none">{count}</div>
           <div className="text-[10px] uppercase tracking-wider text-stone-500 font-bold">
             {theme.label}
           </div>

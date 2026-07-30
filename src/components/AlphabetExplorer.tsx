@@ -62,7 +62,7 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6 animate-fadeIn">
       {/* Header */}
       <div className="bg-gradient-to-r from-stone-900 via-stone-900 to-stone-950 p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-xl">
-        <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 bg-accent/20 text-accent border border-accent/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
           <PenLine className="w-3.5 h-3.5" /> 28 lettres, écrites à la main
         </div>
         <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">L'Alphabet en Mouvement</h2>
@@ -93,7 +93,7 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
           <div className="space-y-3">
             <div className="flex items-baseline gap-3 flex-wrap">
               <span className="text-3xl font-black text-white">{letter.translit}</span>
-              <span className="text-2xl text-amber-400" style={{ fontFamily: 'Amiri, serif' }}>
+              <span className="text-2xl text-accent" style={{ fontFamily: 'Amiri, serif' }}>
                 {letter.name}
               </span>
             </div>
@@ -105,8 +105,8 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
               <p className="text-sm text-stone-200">{letter.sound}</p>
             </div>
 
-            <div className="bg-amber-500/10 border border-amber-500/25 rounded-2xl p-4 space-y-1.5">
-              <div className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+            <div className="bg-accent/10 border border-accent/25 rounded-2xl p-4 space-y-1.5">
+              <div className="text-xs font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" /> Le hack
               </div>
               <p className="text-sm text-stone-200">{letter.hack}</p>
@@ -150,7 +150,7 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
               onClick={() => setTouring((t) => !t)}
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold border transition-colors active:scale-95 ${
                 touring
-                  ? 'bg-amber-500 text-stone-950 border-amber-400'
+                  ? 'bg-accent text-stone-950 border-accent'
                   : 'bg-stone-800 hover:bg-stone-700 text-stone-200 border-stone-700'
               }`}
             >
@@ -191,12 +191,12 @@ export const AlphabetExplorer: React.FC<AlphabetExplorerProps> = ({ selectedDial
               aria-current={isActive}
               className={`group flex flex-col items-center justify-center gap-0.5 rounded-2xl py-3 border transition-all duration-200 ${
                 isActive
-                  ? 'bg-amber-500 border-amber-300 text-stone-950 shadow-lg shadow-amber-500/25 scale-105'
+                  ? 'bg-accent border-accent text-stone-950 shadow-lg shadow-accent/25 scale-105'
                   : 'bg-stone-950/60 border-stone-800 text-stone-300 hover:bg-stone-800 hover:border-stone-600'
               }`}
             >
               <span
-                className={`text-3xl leading-none ${isActive ? 'text-stone-950' : 'text-amber-400 group-hover:text-amber-300'}`}
+                className={`text-3xl leading-none ${isActive ? 'text-stone-950' : 'text-accent group-hover:text-accent'}`}
                 style={{ fontFamily: 'Amiri, serif' }}
               >
                 {item.char}

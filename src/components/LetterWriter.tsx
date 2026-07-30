@@ -227,7 +227,7 @@ export const LetterWriter: React.FC<LetterWriterProps> = ({
         textAnchor="middle"
         fontSize={FONT_SIZE}
         fontFamily="Amiri, serif"
-        className="fill-amber-400"
+        className="fill-accent"
         mask={done ? undefined : `url(#${maskId})`}
       >
         {letter.char}

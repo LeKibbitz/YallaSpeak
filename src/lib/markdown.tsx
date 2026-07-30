@@ -14,7 +14,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
   return text.split(INLINE).filter(Boolean).map((chunk, i) => {
     const key = `${keyPrefix}-${i}`;
     if (chunk.startsWith('**') && chunk.endsWith('**')) {
-      return <strong key={key} className="text-amber-300 font-bold">{chunk.slice(2, -2)}</strong>;
+      return <strong key={key} className="text-accent font-bold">{chunk.slice(2, -2)}</strong>;
     }
     if (chunk.startsWith('`') && chunk.endsWith('`')) {
       return (

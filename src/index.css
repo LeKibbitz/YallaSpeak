@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Per-language brand color: App.tsx sets --accent from LANGUAGES[lang].accent,
+   every accent-* utility below re-themes with it. Fallback = YallaSpeak amber. */
+@theme inline {
+  --color-accent: var(--accent, #f59e0b);
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

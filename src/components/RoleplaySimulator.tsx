@@ -108,7 +108,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 bg-accent/20 text-accent border border-accent/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
             <MessageSquare className="w-3.5 h-3.5" /> Immersion Vocale Directe
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-white">
@@ -121,7 +121,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
 
         <button
           onClick={() => setShowCustomForm(!showCustomForm)}
-          className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black px-5 py-3 rounded-2xl text-sm shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-all shrink-0"
+          className="bg-gradient-to-r from-accent to-accent/80 hover:brightness-110 text-stone-950 font-black px-5 py-3 rounded-2xl text-sm shadow-lg shadow-accent/20 flex items-center gap-2 transition-all shrink-0"
         >
           <Sparkles className="w-4 h-4 fill-stone-950" />
           <span>Créer un Scénario IA</span>
@@ -130,13 +130,13 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
 
       {/* AI Scenario Generator Form */}
       {showCustomForm && (
-        <form onSubmit={handleGenerateAI} className="bg-stone-900 border-2 border-amber-500/50 rounded-3xl p-6 shadow-2xl space-y-4 animate-fadeIn">
+        <form onSubmit={handleGenerateAI} className="bg-stone-900 border-2 border-accent/50 rounded-3xl p-6 shadow-2xl space-y-4 animate-fadeIn">
           <div className="flex items-center justify-between border-b border-stone-800 pb-3">
             <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-400" />
+              <Sparkles className="w-5 h-5 text-accent" />
               <span>Générateur d'Immersion Instantanée (IA)</span>
             </h3>
-            <span className="text-xs text-amber-400 font-semibold bg-amber-500/10 px-3 py-1 rounded-full">
+            <span className="text-xs text-accent font-semibold bg-accent/10 px-3 py-1 rounded-full">
               Dialecte : {currentDialectInfo.name} {currentDialectInfo.flag}
             </span>
           </div>
@@ -151,7 +151,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
               disabled={isGenerating}
-              className="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-2xl p-4 text-sm sm:text-base text-white placeholder-stone-500 focus:outline-none shadow-inner"
+              className="w-full bg-stone-950 border border-stone-700 focus:border-accent rounded-2xl p-4 text-sm sm:text-base text-white placeholder-stone-500 focus:outline-none shadow-inner"
               required
             />
           </div>
@@ -220,7 +220,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
               onClick={() => setActiveScenario(scen)}
               className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
                 isSelected
-                  ? 'bg-amber-500 text-stone-950 shadow-lg shadow-amber-500/20 scale-[1.02]'
+                  ? 'bg-accent text-stone-950 shadow-lg shadow-accent/20 scale-[1.02]'
                   : 'bg-stone-900 text-stone-300 hover:bg-stone-800 border border-stone-800'
               }`}
             >
@@ -243,17 +243,17 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
             </div>
             <p className="text-xs sm:text-sm text-stone-400">{activeScenario.description}</p>
           </div>
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-xl self-start sm:self-center">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-3 py-1.5 rounded-xl self-start sm:self-center">
             <Sparkles className="w-3.5 h-3.5" /> Dialecte : {DIALECTS[activeScenario.dialect]?.name.split(' ')[0]}
           </span>
         </div>
 
         {/* Survival Hack Box */}
         {activeScenario.survivalHack && (
-          <div className="m-6 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-stone-800 to-amber-500/10 border border-amber-500/30 flex items-start gap-3">
-            <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div className="m-6 p-4 rounded-2xl bg-gradient-to-r from-accent/10 via-stone-800 to-accent/10 border border-accent/30 flex items-start gap-3">
+            <ShieldAlert className="w-5 h-5 text-accent shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-accent mb-1">
                 ⚡ Hack Linguistique & Culturel :
               </h4>
               <p className="text-xs sm:text-sm text-stone-200 leading-relaxed">
@@ -278,7 +278,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
                   {isMe ? (
                     <>
                       <span>Moi (Élève)</span>
-                      <User className="w-3.5 h-3.5 text-amber-400" />
+                      <User className="w-3.5 h-3.5 text-accent" />
                     </>
                   ) : (
                     <>
@@ -292,7 +292,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
                 <div
                   className={`max-w-2xl w-full sm:w-4/5 rounded-3xl p-5 border shadow-md transition-all ${
                     isMe
-                      ? 'bg-gradient-to-br from-stone-800 to-stone-850 border-amber-500/30 text-right rounded-tr-none'
+                      ? 'bg-gradient-to-br from-stone-800 to-stone-850 border-accent/30 text-right rounded-tr-none'
                       : 'bg-stone-950 border-stone-800 text-left rounded-tl-none'
                   }`}
                 >
@@ -310,7 +310,7 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
 
                     <div className="flex-1">
                       {/* Large Phonetic */}
-                      <div className="text-base sm:text-xl font-black text-amber-400 font-mono tracking-wide">
+                      <div className="text-base sm:text-xl font-black text-accent font-mono tracking-wide">
                         "{line.phonetic}"
                       </div>
                       
@@ -339,8 +339,8 @@ export const RoleplaySimulator: React.FC<RoleplaySimulatorProps> = ({
 
                   {/* Tip inside line */}
                   {line.tip && (
-                    <div className="mt-3 pt-2 border-t border-stone-800/50 text-[11px] text-amber-300/90 flex items-center gap-1.5 justify-end">
-                      <Sparkles className="w-3 h-3 text-amber-400 shrink-0" />
+                    <div className="mt-3 pt-2 border-t border-stone-800/50 text-[11px] text-accent/90 flex items-center gap-1.5 justify-end">
+                      <Sparkles className="w-3 h-3 text-accent shrink-0" />
                       <span>{line.tip}</span>
                     </div>
                   )}
