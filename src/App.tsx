@@ -8,6 +8,7 @@ import { Navbar } from './components/Navbar';
 import { SpeedTrainer } from './components/SpeedTrainer';
 import { VocabExplorer } from './components/VocabExplorer';
 import { RoleplaySimulator } from './components/RoleplaySimulator';
+import { StudioMode } from './components/StudioMode';
 import { PronunciationGuide } from './components/PronunciationGuide';
 import { AlphabetExplorer } from './components/AlphabetExplorer';
 import { DialectSelectorModal } from './components/DialectSelectorModal';
@@ -167,6 +168,13 @@ export default function App() {
 
         {activeTab === 'roleplay' && (
           <RoleplaySimulator
+            selectedDialect={progress.selectedDialect}
+            onAddXp={handleAddXp}
+          />
+        )}
+
+        {activeTab === 'studio' && (
+          <StudioMode
             selectedDialect={progress.selectedDialect}
             onAddXp={handleAddXp}
           />

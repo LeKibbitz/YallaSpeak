@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Flame, Trophy, BookOpen, MessageSquare, Mic, Bot, Globe, ChevronDown, PenLine, Dumbbell } from 'lucide-react';
+import { Zap, Flame, Trophy, BookOpen, MessageSquare, Mic, Bot, Globe, ChevronDown, PenLine, Dumbbell, Clapperboard } from 'lucide-react';
 import { DialectId, UserProgress } from '../types';
 import { DIALECTS } from '../data/dialects';
 
@@ -26,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'speed', label: 'Mode Éclair (Speed 5s)', icon: Zap, badge: '⚡ Turbo' },
     { id: 'vocab', label: 'Les 500 Mots d\'Or', icon: BookOpen },
     { id: 'roleplay', label: 'Simulateur de Rue', icon: MessageSquare, badge: 'IA' },
+    { id: 'studio', label: 'Studio Doublage', icon: Clapperboard, badge: 'Nouveau' },
     { id: 'hacks', label: 'Sons & Prononciation', icon: Mic },
     { id: 'alphabet', label: 'Alphabet', icon: PenLine, badge: 'Écriture' }
   ];
