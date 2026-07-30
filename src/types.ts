@@ -31,6 +31,10 @@ export interface LanguageInfo {
   name: string;
   flag: string;
   tagline: string;
+  /** Per-language brand: "YallaSpeak" for Arabic, "DaiSpeak" for Italian... */
+  brandName: string;
+  /** Short interjection shown in the logo square ("يلا", "Dai!"). */
+  logoGlyph: string;
   script: ScriptInfo;
   /** What the variants are called in this language ("dialecte", "accent régional"...). */
   variantNoun: string;

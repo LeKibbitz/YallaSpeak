@@ -253,7 +253,7 @@ export default function App() {
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6 border-t border-stone-800/80 text-center text-xs text-stone-500 space-y-2">
         <div className="flex items-center justify-center gap-2 text-stone-400 font-bold">
-          <span className="text-amber-500">⚡ YallaSpeak</span> • La méthode 100% langue parlée & vocabulaire quotidien
+          <span className="text-amber-500">⚡ {activeLanguage.brandName}</span> • La méthode 100% langue parlée & vocabulaire quotidien
         </div>
         <p>
           Langues prises en charge :{' '}

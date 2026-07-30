@@ -50,12 +50,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Logo & Subtitle */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('speed')}>
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-emerald-600 to-teal-700 flex items-center justify-center shadow-lg transform -rotate-3 transition-transform hover:rotate-0">
-              <span className="text-xl sm:text-2xl font-black text-white">يلا</span>
+              <span className={`font-black text-white ${language.logoGlyph.length > 3 ? 'text-sm sm:text-base' : 'text-xl sm:text-2xl'}`}>
+                {language.logoGlyph}
+              </span>
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-amber-400 via-emerald-400 to-teal-300 bg-clip-text text-transparent">
-                  YallaSpeak
+                  {language.brandName}
                 </h1>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
                   ⚡ Quotidien

@@ -61,6 +61,8 @@ export const LANGUAGES: Record<LanguageId, LanguageInfo> = {
     id: 'arabe',
     name: 'Arabe du quotidien',
     flag: '🕌',
+    brandName: 'YallaSpeak',
+    logoGlyph: 'يلا',
     tagline: "0% grammaire littéraire, 100% rue : le parler réel de Beyrouth au Caire.",
     script: SCRIPTS.arabic,
     variantNoun: 'dialecte',
@@ -72,6 +74,9 @@ export const LANGUAGES: Record<LanguageId, LanguageInfo> = {
     id: 'italien',
     name: 'Italien du quotidien',
     flag: '🇮🇹',
+    // "Dai!" is the Italian "yalla": same brand, local energy.
+    brandName: 'DaiSpeak',
+    logoGlyph: 'Dai!',
     tagline: "L'italien qui se parle vraiment, de l'aperitivo milanais à la pizzeria napolitaine.",
     script: SCRIPTS.latin,
     variantNoun: 'accent régional',
