@@ -41,7 +41,7 @@ export const PronunciationGuide: React.FC<PronunciationGuideProps> = ({ selected
       {/* The Hacks Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {PRONUNCIATION_HACKS.map((hack, idx) => {
-          const badge = (hack as any).badge;
+          const badge = hack.badge;
           return (
             <div
               key={idx}
@@ -69,12 +69,6 @@ export const PronunciationGuide: React.FC<PronunciationGuideProps> = ({ selected
                       <span className="text-xs text-amber-400 font-semibold">Le son arabe authentique</span>
                     </div>
                   </div>
-                  <AudioPlayerButton
-                    text={hack.audioWord}
-                    arabicText={hack.example}
-                    dialect={selectedDialect}
-                    size="md"
-                  />
                 </div>
 
               {/* Description */}
@@ -101,19 +95,33 @@ export const PronunciationGuide: React.FC<PronunciationGuideProps> = ({ selected
               </div>
             </div>
 
-            {/* Example Box */}
-            <div className="mt-5 pt-4 border-t border-stone-800/80 flex items-center justify-between bg-stone-950/40 p-3 rounded-xl">
-              <div>
-                <span className="text-[10px] uppercase font-bold text-stone-400">Exemple à s'entraîner :</span>
-                <div className="text-base font-bold text-white mt-0.5">{hack.example}</div>
+            {/* The word the audio actually says: script, phonetic, meaning */}
+            <div className="mt-5 pt-4 border-t border-stone-800/80 bg-stone-950/40 p-4 rounded-xl space-y-3">
+              <span className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">
+                Le mot à répéter
+              </span>
+              <div className="flex items-end justify-between gap-3">
+                <div className="min-w-0">
+                  <div
+                    className="text-3xl sm:text-4xl font-bold text-white leading-tight"
+                    style={{ fontFamily: 'Amiri, serif' }}
+                    dir="rtl"
+                    lang="ar"
+                  >
+                    {hack.arabic}
+                  </div>
+                  <div className="text-base font-black text-amber-400 mt-1">{hack.phonetic}</div>
+                  <div className="text-xs text-stone-300 mt-0.5">{hack.french}</div>
+                </div>
+                <AudioPlayerButton
+                  text={hack.phonetic}
+                  arabicText={hack.speakPhonetic ? undefined : hack.arabic}
+                  dialect={selectedDialect}
+                  label="Écouter"
+                  size="sm"
+                  className="shrink-0"
+                />
               </div>
-              <AudioPlayerButton
-                text={hack.audioWord}
-                arabicText={hack.example}
-                dialect={selectedDialect}
-                label="Écouter l'exemple"
-                size="sm"
-              />
             </div>
           </div>
         );

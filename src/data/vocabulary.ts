@@ -762,61 +762,84 @@ export const SAMPLE_SCENARIOS: ScenarioDialogue[] = [
   }
 ];
 
-export const PRONUNCIATION_HACKS = [
+export interface PronunciationHack {
+  letter: string;
+  sound: string;
+  hack: string;
+  /** Le mot unique à répéter, en écriture arabe. */
+  arabic: string;
+  /** Le même mot en Arabizi, tel qu'il se dit vraiment dans la rue. */
+  phonetic: string;
+  /** Ce que ça veut dire, en français simple. */
+  french: string;
+  /**
+   * Les cartes qui portent sur un glissement dialectal (Qaf devenu coup de
+   * glotte, Qaf devenu G) doivent s'entendre comme la rue les dit, et
+   * l'écriture ne l'encode pas : on envoie alors la phonétique à la synthèse.
+   */
+  speakPhonetic?: boolean;
+  badge?: string;
+}
+
+export const PRONUNCIATION_HACKS: PronunciationHack[] = [
   {
     letter: "Kh (خ - Kha)",
     sound: "Le 'R' rugueux du français (comme dans 'J'arrive' prononcé par un parisien) mais un peu plus gratté au fond de la gorge.",
     hack: "Faites le bruit de racler doucement votre gorge avant de prononcer un 'R'. Pensez au mot espagnol 'Jota' ou au compositeur 'Bach'.",
-    example: "Khallas (خلاص = Fini/D'accord)",
-    audioWord: "Khallas",
-    badge: undefined
+    arabic: "خلاص",
+    phonetic: "Khallas",
+    french: "C'est fini, ça marche, on n'en parle plus"
   },
   {
     letter: "Gh (غ - Ghayn)",
     sound: "Le son 'R' gras et doux du français (comme dans 'Paris' ou 'Rose').",
     hack: "C'est EXACTEMENT le 'R' standard français ! En phonétique anglaise ils écrivent 'Gh', mais pour un francophone c'est tout simplement notre R naturel !",
-    example: "Ghali (غالي = Cher)",
-    audioWord: "Ghali",
-    badge: undefined
+    arabic: "غالي",
+    phonetic: "Ghali",
+    french: "Cher, hors de prix (le mot du souk)"
   },
   {
     letter: "Ain (ع - 'Ayn)",
     sound: "Le son le plus célèbre de l'arabe ! Une contraction profonde au fond de la gorge.",
     hack: "Imaginez que vous êtes chez le médecin qui vous demande d'ouvrir grand la bouche en disant 'Aaaaah', ou comme si vous avaliez une gorgée d'eau tout en parlant. Commencez par un 'A' profond et serrez la gorge.",
-    example: "Habibi / Afwan / Yatik el aafiye",
-    audioWord: "Afwan",
-    badge: undefined
+    arabic: "عفوا",
+    phonetic: "Afwan",
+    french: "Je t'en prie, pas de quoi (la réponse à merci)"
   },
   {
     letter: "H emphatic (ح - Ha)",
     sound: "Un 'H' très expiré, chaud et net, comme de la buée sur un miroir.",
     hack: "Faites comme si vous souffliez de l'air chaud pour nettoyer vos lunettes : 'Hhhh'. C'est le son du H dans 'Habibi' (Mon chéri) ou 'Hummus' !",
-    example: "Habibi (حبيبي = Mon chéri / Mon ami)",
-    audioWord: "Habibi",
-    badge: undefined
+    arabic: "حبيبي",
+    phonetic: "Habibi",
+    french: "Mon chéri, mon ami (s'emploie toute la journée)"
   },
   {
     letter: "Qaf / Glottal stop (ق / ')",
     sound: "Dans le Levant et en Égypte, le 'Q' (Qaf) disparaît souvent dans la rue pour devenir un petit coup de glotte (un arrêt sec de la voix).",
     hack: "Au lieu de dire 'Qahwa' pour café, les Libanais et Égyptiens disent 'Ahwe' (avec une petite coupure avant le A). C'est ultra moderne et facile à prononcer !",
-    example: "Ahwe (قهوة = Café au Levant/Égypte)",
-    audioWord: "Ahwe",
-    badge: undefined
+    arabic: "قهوة",
+    phonetic: "Ahwe",
+    french: "Café (prononcé sans le Q au Levant et en Égypte)",
+    speakPhonetic: true
   },
   {
     letter: "G de Garage au lieu du Qaf (🇦🇪 Spécificité Émirats)",
     sound: "En Émirati (Dubaï, Abu Dhabi) et dans le Golfe, le 'Qaf' littéraire (ق) se transforme en 'G' dur comme dans 'Garage' ou 'Gare' !",
     hack: "C'est la règle d'or pour parler comme un natif des Émirats ! Au lieu de dire 'Qahwa' (café), vous dites 'Gahwa' (قهوة). La route (Tarig) se dit 'Tarig', et mon cœur (Qalbi) se dit 'Galbi' !",
-    example: "Gahwa (قهوة = Café bédouin à la cardamome)",
-    audioWord: "Gahwa",
+    arabic: "قهوة",
+    phonetic: "Gahwa",
+    french: "Café bédouin à la cardamome (le même mot, prononcé avec un G)",
+    speakPhonetic: true,
     badge: "🇦🇪 Spécificité Émirats & Golfe"
   },
   {
     letter: "Formules d'Honneur : Abshir & Marhaba (🇦🇪 Spécificité Émirats)",
     sound: "Aux Émirats Arabes Unis, l'hospitalité bédouine exige des mots d'une noblesse absolue pour dire oui ou pour accueillir.",
     hack: "Quand quelqu'un vous demande un service ou vous invite, ne dites pas juste 'oui', répondez 'Abshir !' (أبشر = Considère que c'est fait avec honneur et joie !) ou 'Tamm' (تم = Acté/Validé). Et pour accueillir, utilisez la salutation émiratie reine : 'Ya Marhaba el sa'a' (يا مرحبا الساع = Bienvenue à cette heure) !",
-    example: "Abshir ! Tamm ! (أبشر ! تم ! = Considère que c'est fait avec honneur !)",
-    audioWord: "Abshir",
+    arabic: "أبشر",
+    phonetic: "Abshir",
+    french: "Considère que c'est fait, avec honneur et joie",
     badge: "🇦🇪 Spécificité Émirats & Golfe"
   }
 ];

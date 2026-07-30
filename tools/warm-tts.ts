@@ -47,10 +47,15 @@ function collect(): Phrase[] {
     }
   }
 
-  // Pronunciation guide: the example word, in every dialect
+  // Pronunciation guide: the word to repeat, in every dialect. Same rule as the
+  // card: a dialectal shift is heard through its phonetic, not through the script.
   for (const hack of PRONUNCIATION_HACKS) {
     for (const dialect of DIALECT_IDS) {
-      phrases.push({ dialect, text: hack.audioWord, arabic: hack.example });
+      phrases.push({
+        dialect,
+        text: hack.phonetic,
+        arabic: hack.speakPhonetic ? undefined : hack.arabic
+      });
     }
   }
 
