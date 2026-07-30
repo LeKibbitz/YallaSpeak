@@ -12,7 +12,28 @@ export const DIALECT_TTS_NAMES: Record<DialectId, string> = {
   mandarin_standard: 'Standard Mandarin Chinese',
   pekinois: 'Beijing Mandarin Chinese',
   taiwanais: 'Taiwanese Mandarin Chinese',
-  dongbei: 'Northeastern Mandarin Chinese'
+  dongbei: 'Northeastern Mandarin Chinese',
+  thai_central: 'Central Thai',
+  isan: 'Isan Thai',
+  thai_nord: 'Northern Thai',
+  japonais_standard: 'Standard Japanese',
+  kansai: 'Kansai Japanese',
+  hakata: 'Hakata Japanese',
+  russe_standard: 'Standard Russian',
+  piterski: 'Saint Petersburg Russian',
+  russe_sud: 'Southern Russian',
+  grec_standard: 'Standard Greek',
+  cretois: 'Cretan Greek',
+  chypriote: 'Cypriot Greek',
+  merina: 'Merina Malagasy',
+  cotier: 'Coastal Malagasy',
+  castillan: 'Castilian Spanish',
+  andalou: 'Andalusian Spanish',
+  mexicain: 'Mexican Spanish',
+  argentin: 'Argentine Spanish',
+  portugais_pt: 'European Portuguese',
+  bresilien: 'Brazilian Portuguese',
+  angolais: 'Angolan Portuguese'
 };
 
 /**

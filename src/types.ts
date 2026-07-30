@@ -2,7 +2,17 @@
  * A language of the app. Adding one = adding its variants to DialectId,
  * its entry in LANGUAGES (data/languages.ts) and its vocabulary file.
  */
-export type LanguageId = 'arabe' | 'italien' | 'mandarin';
+export type LanguageId =
+  | 'arabe'
+  | 'italien'
+  | 'mandarin'
+  | 'thai'
+  | 'japonais'
+  | 'russe'
+  | 'grec'
+  | 'malgache'
+  | 'espagnol'
+  | 'portugais';
 
 /**
  * How a language is written. The 'non-latin' group (arabe, thaï, han,
@@ -15,7 +25,7 @@ export type LanguageId = 'arabe' | 'italien' | 'mandarin';
 export type ScriptGroup = 'latin' | 'non-latin';
 
 export interface ScriptInfo {
-  id: 'latin' | 'arabic' | 'cyrillic' | 'thai' | 'han' | 'kana';
+  id: 'latin' | 'arabic' | 'cyrillic' | 'thai' | 'han' | 'kana' | 'greek';
   label: string;
   group: ScriptGroup;
   direction: 'ltr' | 'rtl';
@@ -67,7 +77,28 @@ export type DialectId =
   | 'mandarin_standard'
   | 'pekinois'
   | 'taiwanais'
-  | 'dongbei';
+  | 'dongbei'
+  | 'thai_central'
+  | 'isan'
+  | 'thai_nord'
+  | 'japonais_standard'
+  | 'kansai'
+  | 'hakata'
+  | 'russe_standard'
+  | 'piterski'
+  | 'russe_sud'
+  | 'grec_standard'
+  | 'cretois'
+  | 'chypriote'
+  | 'merina'
+  | 'cotier'
+  | 'castillan'
+  | 'andalou'
+  | 'mexicain'
+  | 'argentin'
+  | 'portugais_pt'
+  | 'bresilien'
+  | 'angolais';
 
 export interface DialectInfo {
   id: DialectId;

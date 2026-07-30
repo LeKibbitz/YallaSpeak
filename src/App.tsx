@@ -256,9 +256,9 @@ export default function App() {
           <span className="text-amber-500">⚡ {activeLanguage.brandName}</span> • La méthode 100% langue parlée & vocabulaire quotidien
         </div>
         <p>
-          Langues prises en charge :{' '}
+          {Object.keys(LANGUAGES).length} langues, {Object.keys(DIALECTS).length} parlers régionaux :{' '}
           {Object.values(LANGUAGES)
-            .map((lang) => `${lang.name} ${lang.flag} (${lang.variants.map((v) => DIALECTS[v].flag).join('')})`)
+            .map((lang) => `${lang.flag} ${lang.name.replace(' du quotidien', '')}`)
             .join(', ')}
           .
         </p>

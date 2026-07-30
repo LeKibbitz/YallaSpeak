@@ -7,6 +7,13 @@
  */
 import { VOCABULARY_LIST_IT } from '../src/data/vocabulary.italian';
 import { VOCABULARY_LIST_MD } from '../src/data/vocabulary.mandarin';
+import { VOCABULARY_LIST_TH } from '../src/data/vocabulary.thai';
+import { VOCABULARY_LIST_JP } from '../src/data/vocabulary.japanese';
+import { VOCABULARY_LIST_RU } from '../src/data/vocabulary.russian';
+import { VOCABULARY_LIST_EL } from '../src/data/vocabulary.greek';
+import { VOCABULARY_LIST_MG } from '../src/data/vocabulary.malagasy';
+import { VOCABULARY_LIST_ES } from '../src/data/vocabulary.spanish';
+import { VOCABULARY_LIST_PT } from '../src/data/vocabulary.portuguese';
 import { DIALECTS } from '../src/data/dialects';
 import { DialectId, VocabItem } from '../src/types';
 
@@ -33,6 +40,62 @@ const PACKS: { vocabulary: VocabItem[]; variants: Partial<Record<DialectId, stri
       pekinois: 'Beijing Mandarin Chinese',
       taiwanais: 'Taiwanese Mandarin Chinese',
       dongbei: 'Northeastern Mandarin Chinese'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_TH,
+    variants: {
+      thai_central: 'Central Thai',
+      isan: 'Isan Thai',
+      thai_nord: 'Northern Thai'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_JP,
+    variants: {
+      japonais_standard: 'Standard Japanese',
+      kansai: 'Kansai Japanese',
+      hakata: 'Hakata Japanese'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_RU,
+    variants: {
+      russe_standard: 'Standard Russian',
+      piterski: 'Saint Petersburg Russian',
+      russe_sud: 'Southern Russian'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_EL,
+    variants: {
+      grec_standard: 'Standard Greek',
+      cretois: 'Cretan Greek',
+      chypriote: 'Cypriot Greek'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_MG,
+    variants: {
+      merina: 'Merina Malagasy',
+      cotier: 'Coastal Malagasy'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_ES,
+    variants: {
+      castillan: 'Castilian Spanish',
+      andalou: 'Andalusian Spanish',
+      mexicain: 'Mexican Spanish',
+      argentin: 'Argentine Spanish'
+    }
+  },
+  {
+    vocabulary: VOCABULARY_LIST_PT,
+    variants: {
+      portugais_pt: 'European Portuguese',
+      bresilien: 'Brazilian Portuguese',
+      angolais: 'Angolan Portuguese'
     }
   }
 ];

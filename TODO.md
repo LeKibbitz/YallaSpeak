@@ -6,6 +6,7 @@
 - [x] Pack italien : 48 items, variantes romanesco/napolitain/milanais, voix TTS whitelistées (45259c9)
 - [x] Recharger les crédits Gemini prépayés (10 € le 30/07, auto-reload 10 € sous 1 €, max 1x/mois)
 - [x] Pack mandarin : 52 items, accents standard/pékinois/taïwanais/dongbei, marque ZouSpeak (走吧), pinyin à tons + hanzi (eb1fdfd)
-- [ ] Pré-générer le cache TTS italien + mandarin : 108/440 clips en cache au 30/07 (coût mesuré : ~0,12 €/100 clips). Quota Tier 1 : 100 générations/jour sur gemini-3.1-flash-tts, reset ~09h heure FR, non reportable. Relancer chaque matin `cd ~/projects/YallaSpeak && node .tmp/pregen-tts.cjs` (rebuild : `npx esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs`). Le script enchaîne les packs et draine 100 générations par fenêtre : ~4 matinées restantes (31/07 → 03/08)
-- [ ] Prochains packs non-latins (groupe prioritaire phonetic-first) : thaï, japonais, russe
-- [ ] Packs latins suivants : espagnol
+- [x] Sélecteur deux étapes : langue d'abord, puis ses variantes (modal DialectSelectorModal)
+- [x] 7 nouveaux packs : thaï (PaiSpeak), japonais (IkuzoSpeak), russe (DavaiSpeak), grec (PameSpeak), malgache (AndaoSpeak), espagnol (VamosSpeak), portugais (BoraSpeak) : 21 variantes, 52 items chacun
+- [ ] Pré-générer le cache TTS des 9 packs : 110/1553 clips en cache au 30/07 (coût mesuré : ~0,12 €/100 clips). Quota Tier 1 : 100 générations/jour sur gemini-3.1-flash-tts, reset ~09h heure FR, non reportable. Relancer chaque matin `cd ~/projects/YallaSpeak && node .tmp/pregen-tts.cjs` (rebuild : `npx esbuild scripts/pregen-tts.ts --bundle --platform=node --outfile=.tmp/pregen-tts.cjs`). Le script enchaîne les packs et draine 100 générations par fenêtre : ~15 matinées restantes (31/07 → mi-août)
+- [ ] Décider du nom générique de la plateforme (les marques par langue restent : YallaSpeak, ZouSpeak, PaiSpeak...)
