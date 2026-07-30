@@ -1,6 +1,6 @@
 # YallaSpeak, audit code, architecture, securite et son
 
-Audit realise le 26/07/2026 sur le depot `LeKibbitz/YallahSpeak` (branche
+Audit realise le 26/07/2026 sur le depot `LeKibbitz/YallaSpeak` (branche
 principale, 2 commits d'origine AI Studio). Toutes les mesures citees ont ete
 prises sur la machine, pas estimees.
 
